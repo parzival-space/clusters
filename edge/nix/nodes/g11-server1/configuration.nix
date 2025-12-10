@@ -19,6 +19,22 @@
   networking.networkmanager.enable = true; # Easiest to use and most distros use this by default.
   networking.enableIPv6 = true;
 
+  # configure firewall
+  # 6443 - Kubernetes API server
+  # 80 - HTTP
+  # 443 - HTTPS
+  # 8472 - Flannel VXLAN networking
+  networking.firewall.allowedTCPPorts = [ 6443 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 8472 ];
+
+  sops.secrets."k3s/token" = { };
+  services.k3s = {
+    enable = true;
+    role = "server";
+    clusterInit = true;
+    tokenFile = config.sops.secrets."k3s/token".path;
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave
