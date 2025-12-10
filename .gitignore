@@ -1,0 +1,4 @@
+# ignore idea project files
+.idea/copilot.*.xml
+.idea/*.iml
+.idea/modules.xml
