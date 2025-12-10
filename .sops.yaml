@@ -1,0 +1,12 @@
+# Initialize new keys using:
+# age-keygen >> ~/.config/sops/age/keys.txt
+# Don't forget to back up private keys!
+# age private keys are expected on the host in /var/lib/sops-nix/age/keys.txt
+keys:
+  - &edge age1y59wyvraz4g4d4lmsz9r2rhs6kycunvg538ystukfjtm6jam9uvqx94s7k
+
+creation_rules:
+  - age: [*edge]
+    path_regex: 'edge/nix/secrets.yaml$'
+  - age: [*edge]
+    path_regex: 'edge/deployment/.*secret.yaml'
