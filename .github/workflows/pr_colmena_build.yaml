@@ -27,6 +27,7 @@ jobs:
       - name: Print nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
 
+      # todo: use cachix for prebuilt colmena?
       - name: Install Colmena
         run: nix-env -if https://github.com/zhaofengli/colmena/tarball/main
 
@@ -35,22 +36,18 @@ jobs:
         working-directory: ./${{ matrix.cluster }}/nix
         continue-on-error: true
         run: |
-          colmena build |& tee build.log
-          echo "output<<EOF" >> $GITHUB_OUTPUT
-          cat build.log >> $GITHUB_OUTPUT
-          echo "EOF" >> $GITHUB_OUTPUT
+          colmena build
 
       - name: Publish Report
         uses: actions/github-script@v7
         env:
-          OUTPUT: ${{ steps.build.outputs.output }}
+          SUCCESS: ${{ steps.build.exitcode == 0 }}
           TITLE: "Results for Colmena Build - ${{ matrix.cluster }} Cluster"
           SUMMARY_SUCCESS: "Colmena build completed successfully."
           SUMMARY_FAILURE: "Colmena build failed. Please check the logs for details."
         with:
           script: |
-            const commandLog = process.env.OUTPUT;
-            const conclusion = commandLog.includes('All done') ? 'success' : 'failure';
+            const conclusion = process.env.SUCCESS === 'true' ? 'success' : 'failure';
 
             await github.rest.checks.create({
               owner: context.repo.owner,
@@ -61,7 +58,6 @@ jobs:
               conclusion: conclusion,
               output: {
                 title: process.env.TITLE,
-                summary: conclusion === 'success' ? process.env.SUMMARY_SUCCESS : process.env.SUMMARY_FAILURE,
-                text: output_preview
+                summary: conclusion === 'success' ? process.env.SUMMARY_SUCCESS : process.env.SUMMARY_FAILURE
               }
             });
