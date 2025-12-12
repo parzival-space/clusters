@@ -2,3 +2,6 @@
 .idea/copilot.*.xml
 .idea/*.iml
 .idea/modules.xml
+
+# temporary sops files
+*_unencrypted
