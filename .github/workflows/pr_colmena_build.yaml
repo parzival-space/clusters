@@ -48,22 +48,20 @@ jobs:
       - name: Publish Report
         uses: actions/github-script@v7
         env:
-          SUCCESS: ${{ steps.build.exitcode == 0 }}
+          RESULT: "${{ steps.build.exitcode == 0 && 'success' || 'failure' }}"
           TITLE: "Results for Colmena Build - ${{ matrix.cluster }} Cluster"
           SUMMARY_SUCCESS: "Colmena build completed successfully."
           SUMMARY_FAILURE: "Colmena build failed. Please check the logs for details."
           SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         with:
           script: |
-            const conclusion = process.env.SUCCESS === 'true' ? 'success' : 'failure';
-
             await github.rest.checks.create({
               owner: context.repo.owner,
               repo: context.repo.repo,
               name: process.env.TITLE,
               head_sha: process.env.SHA,
               status: "completed",
-              conclusion: conclusion,
+              conclusion: process.env.RESULT,
               output: {
                 title: process.env.TITLE,
                 summary: conclusion === 'success' ? process.env.SUMMARY_SUCCESS : process.env.SUMMARY_FAILURE
