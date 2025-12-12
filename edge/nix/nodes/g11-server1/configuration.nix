@@ -27,12 +27,20 @@
   networking.firewall.allowedTCPPorts = [ 6443 80 443 ];
   networking.firewall.allowedUDPPorts = [ 8472 ];
 
+  # K3s server configuration
   sops.secrets."k3s/token" = { };
   services.k3s = {
     enable = true;
     role = "server";
     clusterInit = true;
     tokenFile = config.sops.secrets."k3s/token".path;
+  };
+
+  # configure openscsi
+  environment.systemPackages = [ pkgs.nfs-utils ];
+  services.openiscsi = {
+    enable = true;
+    name = "${config.networking.hostName}-initiatorhost";
   };
 
   # This value determines the NixOS release from which the default
