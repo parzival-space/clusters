@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: kyverno
+  namespace: kyverno-system
+spec:
+  chart:
+    spec:
+      chart: kyverno
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: kyverno
+      version: v3.6.1
+  interval: 15m0s
+  values:
+    admissionController:
+      replicas: 2
+    backgroundController:
+      replicas: 2
+    cleanupController:
+      replicas: 2
+    reportsController:
+      replicas: 2
