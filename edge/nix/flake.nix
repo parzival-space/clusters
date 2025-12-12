@@ -12,13 +12,7 @@
     };
   };
 
-  outputs =
-    {
-      nixpkgs,
-      colmena,
-      sops-nix,
-      ...
-    }:
+  outputs = { nixpkgs, colmena, sops-nix, ... }:
     {
       colmenaHive = colmena.lib.makeHive {
         meta = {
