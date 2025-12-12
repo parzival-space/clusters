@@ -12,6 +12,10 @@ jobs:
           - edge
     name: Colmena Build for '${{ matrix.cluster }}' Cluster
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      checks: write
+      statuses: write
     steps:
       - name: Checkout
         uses: actions/checkout@v6
