@@ -52,6 +52,7 @@ jobs:
           TITLE: "Results for Colmena Build - ${{ matrix.cluster }} Cluster"
           SUMMARY_SUCCESS: "Colmena build completed successfully."
           SUMMARY_FAILURE: "Colmena build failed. Please check the logs for details."
+          SHA: ${{ github.event.pull_request.head.sha || github.sha }}
         with:
           script: |
             const conclusion = process.env.SUCCESS === 'true' ? 'success' : 'failure';
