@@ -27,16 +27,19 @@ jobs:
       - name: Print nixpkgs version
         run: nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'
 
-      # todo: use cachix for prebuilt colmena?
-      - name: Install Colmena
-        run: nix-env -if https://github.com/zhaofengli/colmena/tarball/main
+      - name: Setup Cachix
+        uses: cachix/cachix-action@v14
+        with:
+          name: colmena
+
+      - name: Print Colmena Version
+        run: nix-shell -p colmena --run "colmena --version"
 
       - name: Build Colmena Configuration
         id: build
         working-directory: ./${{ matrix.cluster }}/nix
         continue-on-error: true
-        run: |
-          colmena build
+        run: nix-shell -p colmena --run "colmena build"
 
       - name: Publish Report
         uses: actions/github-script@v7
