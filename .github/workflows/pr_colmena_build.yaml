@@ -44,7 +44,7 @@ jobs:
         working-directory: ./${{ matrix.cluster }}/nix
         continue-on-error: true
         run: |
-          nix run github:zhaofengli/colmena --extra-experimental-features "nix-command flakes" -- build | tee build-${{ matrix.cluster }}.log
+          nix run github:zhaofengli/colmena --extra-experimental-features "nix-command flakes" -- build |& tee build-${{ matrix.cluster }}.log
 
           # if log does not contain "All done!", consider it a success
           if grep -q "All done!" build-${{ matrix.cluster }}.log; then
