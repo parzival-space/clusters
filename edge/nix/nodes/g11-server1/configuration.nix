@@ -34,6 +34,9 @@
     role = "server";
     clusterInit = true;
     tokenFile = config.sops.secrets."k3s/token".path;
+    extraFlags = toString [
+      "--tls-san g11-server1.edge.cluster.parzival.space"
+    ];
   };
 
   # configure openscsi
