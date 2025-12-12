@@ -43,12 +43,14 @@ jobs:
         id: build
         working-directory: ./${{ matrix.cluster }}/nix
         continue-on-error: true
-        run: nix run github:zhaofengli/colmena --extra-experimental-features "nix-command flakes" -- build
+        run: |
+          nix run github:zhaofengli/colmena --extra-experimental-features "nix-command flakes" -- build
+          echo "exitcode=$?" >> $GITHUB_OUTPUT
 
       - name: Publish Report
         uses: actions/github-script@v7
         env:
-          RESULT: "${{ steps.build.exitcode == 0 && 'success' || 'failure' }}"
+          RESULT: "${{ steps.build.outputs.exitcode == '0' && 'success' || 'failure' }}"
           TITLE: "Results for Colmena Build - ${{ matrix.cluster }} Cluster"
           SUMMARY_SUCCESS: "Colmena build completed successfully."
           SUMMARY_FAILURE: "Colmena build failed. Please check the logs for details."
@@ -64,6 +66,6 @@ jobs:
               conclusion: process.env.RESULT,
               output: {
                 title: process.env.TITLE,
-                summary: conclusion === 'success' ? process.env.SUMMARY_SUCCESS : process.env.SUMMARY_FAILURE
+                summary: process.env.RESULT === 'success' ? process.env.SUMMARY_SUCCESS : process.env.SUMMARY_FAILURE
               }
             });
