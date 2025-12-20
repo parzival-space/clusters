@@ -11,7 +11,9 @@ creation_rules:
     path_regex: 'edge/nix/secrets.yaml$'
   - age: [*edge]
     path_regex: 'edge/deployment/.*secret.yaml'
+    encrypted_regex: ^(data|stringData)$
   - age: [*oracle]
     path_regex: 'oracle/nix/secrets.yaml$'
   - age: [*oracle]
     path_regex: 'oracle/deployment/.*secret.yaml'
+    encrypted_regex: ^(data|stringData)$
