@@ -61,9 +61,9 @@ Follow the steps below to install NixOS on an Oracle Cloud instance:
 ### Step 4: Install NixOS
 1. In the netboot.xyz menu, select `Distributions > Linux Network Installs > NixOS`.
 2. Configure SSH access. You can use GitHub for this: ``mkdir -p ~/.ssh && curl https://github.com/USERNAME.keys >> ~/.ssh/authorized_keys`` (replace `USERNAME` with your GitHub username).
-2. Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation) to install NixOS.
-3. After installation, reboot the instance.
-4. Profit!
+3. Follow the [NixOS installation guide](https://nixos.org/manual/nixos/stable/#sec-installation) to install NixOS.
+4. After installation, reboot the instance.
+5. Profit!
 
 ## References
 - [Install NixOS on a Free Oracle Cloud VM](https://mtlynch.io/notes/nix-oracle-cloud/) by Michael Lynch
