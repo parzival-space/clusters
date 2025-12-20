@@ -1,0 +1,13 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImagePolicy
+metadata:
+  name: proxy
+spec:
+  imageRepositoryRef:
+    name: proxy
+  filterTags:
+    pattern: '^(?P<timestamp>.*)Z$'
+    extract: '$timestamp'
+  policy:
+    alphabetical:
+      order: asc

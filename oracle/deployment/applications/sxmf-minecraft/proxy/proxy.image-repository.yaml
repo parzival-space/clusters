@@ -1,0 +1,9 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: proxy
+spec:
+  image: ghcr.io/parzival-space/sxmf-minecraft/proxy
+  interval: 5m
+  secretRef:
+    name: ghcr

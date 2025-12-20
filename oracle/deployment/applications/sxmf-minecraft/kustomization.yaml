@@ -1,7 +1,5 @@
 namespace: sxmf-minecraft
 
 resources:
-  - sxmf-minecraft.git-repository.yaml
-  - sxmf-minecraft.kustomization.yaml
-  - sxmf-minecraft.namespace.yaml
-  - sxmf-minecraft-sync.secret.yaml
+  - proxy
+  - ghcr.secret.yaml
