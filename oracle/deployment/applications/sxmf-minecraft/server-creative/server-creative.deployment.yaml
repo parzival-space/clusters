@@ -21,7 +21,7 @@ spec:
         - name: ghcr
       containers:
         - name: server-creative
-          image: ghcr.io/parzival-space/sxmf-minecraft/server-creative:2025-09-03T22-47Z # {"$imagepolicy": "sxmf-minecraft:server-creative"}
+          image: ghcr.io/parzival-space/sxmf-minecraft/server-creative:2025-12-20T15-09Z # {"$imagepolicy": "sxmf-minecraft:server-creative"}
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 25565
