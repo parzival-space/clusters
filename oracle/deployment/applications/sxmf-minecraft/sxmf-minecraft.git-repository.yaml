@@ -1,0 +1,11 @@
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: sxmf-minecraft
+spec:
+  interval: 5m0s
+  ref:
+    branch: development
+  secretRef:
+    name: sxmf-minecraft-sync
+  url: ssh://git@github.com/parzival-space/sxmf-minecraft.git

@@ -1,10 +1,10 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: kyverno-system
+  name: mc-router
   namespace: flux-system
 spec:
-  path: ./oracle/deployment/infrastructure/kyverno-system
+  path: ./oracle/deployment/applications/mc-router
   prune: true
   interval: 5m
   sourceRef:

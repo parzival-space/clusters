@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mc-router
+  labels:
+    app: mc-router
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mc-router
+  template:
+    metadata:
+      name: mc-router
+      labels:
+        app: mc-router
+    spec:
+      serviceAccountName: mc-router
+      containers:
+        - name: mc-router
+          image: itzg/mc-router:1.32.3
+          imagePullPolicy: IfNotPresent
+          args:
+            - "--in-kube-cluster"
+          ports:
+            - name: minecraft
+              containerPort: 25565
+              protocol: TCP
+          resources:
+            requests:
+              memory: 50Mi
+              cpu: 100m
+              ephemeral-storage: 100Mi
+            limits:
+              memory: 100Mi
+              cpu: 200m
+              ephemeral-storage: 200Mi
+      restartPolicy: Always
+
