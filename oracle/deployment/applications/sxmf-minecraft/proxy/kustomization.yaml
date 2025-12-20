@@ -1,0 +1,6 @@
+resources:
+  - proxy.deployment.yaml
+  - proxy.image-policy.yaml
+  - proxy.image-repository.yaml
+  - proxy.secret.yaml
+  - proxy.service.yaml

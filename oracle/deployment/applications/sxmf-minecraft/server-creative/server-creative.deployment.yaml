@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-creative
+  labels:
+    app: server-creative
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-creative
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      name: server-creative
+      labels:
+        app: server-creative
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr
+      containers:
+        - name: server-creative
+          image: ghcr.io/parzival-space/sxmf-minecraft/server-creative:2025-09-03T22-47Z # {"$imagepolicy": "sxmf-minecraft:server-creative"}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+          env:
+            - name: CFG_PROXY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: proxy
+                  key: proxy-secret
+            - name: MEMORY
+              value: 4G
+            - name: ENABLE_ROLLING_LOGS
+              value: "true"
+            - name: USE_AIKAR_FLAGS
+              value: "true"
+          volumeMounts:
+            - mountPath: /data/world
+              subPath: world
+              name: data
+            - mountPath: /data/world_nether
+              subPath: world_nether
+              name: data
+            - mountPath: /data/world_the_end
+              subPath: world_the_end
+              name: data
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 5Gi
+              ephemeral-storage: 3Gi
+            requests:
+              cpu: 500m
+              memory: 4.5Gi
+              ephemeral-storage: 2Gi
+      restartPolicy: Always
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: server-creative

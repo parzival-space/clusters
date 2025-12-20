@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: proxy
+  labels:
+    app: proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: proxy
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      name: proxy
+      labels:
+        app: proxy
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr
+      containers:
+        - name: proxy
+          image: ghcr.io/parzival-space/sxmf-minecraft/proxy:2025-11-10T14-44Z # {"$imagepolicy": "sxmf-minecraft:proxy"}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: minecraft
+              containerPort: 25565
+              protocol: TCP
+          env:
+            - name: CFG_PROXY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: proxy
+                  key: proxy-secret
+          resources:
+            limits:
+              cpu: 500m
+              memory: 512Mi
+              ephemeral-storage: 1Gi
+            requests:
+              cpu: 100m
+              memory: 256Mi
+              ephemeral-storage: 1Gi
+      restartPolicy: Always

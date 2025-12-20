@@ -27,7 +27,8 @@
   # 80 - HTTP
   # 443 - HTTPS
   # 8472 - Flannel VXLAN networking
-  networking.firewall.allowedTCPPorts = [ 6443 80 443 ];
+  # 25565 - Minecraft server
+  networking.firewall.allowedTCPPorts = [ 6443 80 443 25565 ];
   networking.firewall.allowedUDPPorts = [ 8472 ];
 
   # K3s server configuration

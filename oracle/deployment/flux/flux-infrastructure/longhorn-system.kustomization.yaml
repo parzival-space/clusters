@@ -4,7 +4,7 @@ metadata:
   name: longhorn-system
   namespace: flux-system
 spec:
-  path: ./edge/deployment/infrastructure/longhorn-system
+  path: ./oracle/deployment/infrastructure/longhorn-system
   prune: true
   interval: 5m
   sourceRef:

@@ -1,0 +1,10 @@
+namespace: mc-router
+
+resources:
+  - mc-router.deployment.yaml
+  - mc-router.ingress-route-tcp.yaml
+  - mc-router.namespace.yaml
+  - mc-router.service.yaml
+  - mc-router.service-account.yaml
+  - mc-router-services-watcher.cluster-role-binding.yaml
+  - services-watcher.cluster-role.yaml

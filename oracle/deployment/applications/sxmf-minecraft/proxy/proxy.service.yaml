@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  annotations:
+    "mc-router.itzg.me/externalServerName": "sxmfmc.net,survival.sxmfmc.net,creative.sxmfmc.net"
+spec:
+  selector:
+    app: proxy
+  ports:
+    - name: minecraft
+      protocol: TCP
+      port: 25565
+      targetPort: 25565
+  type: ClusterIP

@@ -1,0 +1,5 @@
+resources:
+  - server-lobby.deployment.yaml
+  - server-lobby.image-policy.yaml
+  - server-lobby.image-repository.yaml
+  - server-lobby.service.yaml
