@@ -1,0 +1,4 @@
+namespace: kube-system
+
+resources:
+  - traefik.helm-chart-config.yaml
