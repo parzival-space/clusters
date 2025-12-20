@@ -31,8 +31,8 @@ spec:
             - name: CFG_PROXY_SECRET
               valueFrom:
                 secretKeyRef:
-                  key: proxy
-                  name: proxy-secret
+                  name: proxy
+                  key: proxy-secret
           resources:
             limits:
               cpu: 500m

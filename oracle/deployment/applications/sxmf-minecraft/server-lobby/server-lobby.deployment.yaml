@@ -30,8 +30,8 @@ spec:
             - name: CFG_PROXY_SECRET
               valueFrom:
                 secretKeyRef:
-                  key: proxy
-                  name: proxy-secret
+                  name: proxy
+                  key: proxy-secret
             - name: MEMORY
               value: 2G
             - name: ENABLE_ROLLING_LOGS
