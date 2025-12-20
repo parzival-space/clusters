@@ -3,4 +3,5 @@ namespace: sxmf-minecraft
 resources:
   - proxy
   - server-lobby
+  - server-creative
   - ghcr.secret.yaml

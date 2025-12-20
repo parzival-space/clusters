@@ -18,7 +18,7 @@ spec:
     spec:
       automountServiceAccountToken: false
       imagePullSecrets:
-        - name: ghcr-auth
+        - name: ghcr
       containers:
         - name: proxy
           image: ghcr.io/parzival-space/sxmf-minecraft/proxy:2025-11-10T14-44Z # {"$imagepolicy": "sxmf-minecraft:proxy"}

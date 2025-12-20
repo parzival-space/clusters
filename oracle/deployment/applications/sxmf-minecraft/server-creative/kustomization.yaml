@@ -1,0 +1,6 @@
+resources:
+  - server-creative.deployment.yaml
+  - server-creative.image-policy.yaml
+  - server-creative.image-repository.yaml
+  - server-creative.persisten-volume-claim.yaml
+  - server-creative.service.yaml

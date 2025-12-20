@@ -18,7 +18,7 @@ spec:
     spec:
       automountServiceAccountToken: false
       imagePullSecrets:
-        - name: ghcr-auth
+        - name: ghcr
       containers:
         - name: server-lobby
           image: ghcr.io/parzival-space/sxmf-minecraft/server-lobby:2025-09-03T23-03Z # {"$imagepolicy": "sxmf-minecraft:server-lobby"}
