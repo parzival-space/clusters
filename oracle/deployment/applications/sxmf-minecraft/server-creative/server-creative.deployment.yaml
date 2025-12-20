@@ -39,14 +39,7 @@ spec:
             - name: USE_AIKAR_FLAGS
               value: "true"
           volumeMounts:
-            - mountPath: /data/world
-              subPath: world
-              name: data
-            - mountPath: /data/world_nether
-              subPath: world_nether
-              name: data
-            - mountPath: /data/world_the_end
-              subPath: world_the_end
+            - mountPath: /data
               name: data
           resources:
             limits:
