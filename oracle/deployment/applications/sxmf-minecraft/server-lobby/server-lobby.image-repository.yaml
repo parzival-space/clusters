@@ -1,0 +1,9 @@
+apiVersion: image.toolkit.fluxcd.io/v1beta2
+kind: ImageRepository
+metadata:
+  name: server-lobby
+spec:
+  image: ghcr.io/parzival-space/sxmf-minecraft/server-lobby
+  interval: 5m
+  secretRef:
+    name: ghcr

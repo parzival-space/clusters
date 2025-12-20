@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: server-lobby
+spec:
+  selector:
+    app: server-lobby
+  clusterIP: None
+  ports:
+    - protocol: TCP
+      port: 25565
+  type: ClusterIP

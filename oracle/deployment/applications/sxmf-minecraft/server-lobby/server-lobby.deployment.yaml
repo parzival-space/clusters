@@ -1,0 +1,50 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-lobby
+  labels:
+    app: server-lobby
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: server-lobby
+  revisionHistoryLimit: 3
+  template:
+    metadata:
+      name: server-lobby
+      labels:
+        app: server-lobby
+    spec:
+      automountServiceAccountToken: false
+      imagePullSecrets:
+        - name: ghcr-auth
+      containers:
+        - name: server-lobby
+          image: ghcr.io/parzival-space/sxmf-minecraft/server-lobby:2025-09-03T23-03Z # {"$imagepolicy": "sxmf-minecraft:server-lobby"}
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 25565
+              protocol: TCP
+          env:
+            - name: CFG_PROXY_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: proxy
+                  name: proxy-secret
+            - name: MEMORY
+              value: 2G
+            - name: ENABLE_ROLLING_LOGS
+              value: "true"
+            - name: USE_AIKAR_FLAGS
+              value: "true"
+          resources:
+            limits:
+              cpu: 1000m
+              memory: 2560Mi
+              ephemeral-storage: 1Gi
+            requests:
+              cpu: 500m
+              memory: 2048Mi
+              ephemeral-storage: 1Gi
+      restartPolicy: Always
