@@ -5,4 +5,5 @@ resources:
   - server-lobby
   - server-creative
   - ghcr.secret.yaml
+  - sxmf-minecraft.image-update-automation.yaml
   - sxmf-minecraft.namespace.yaml
