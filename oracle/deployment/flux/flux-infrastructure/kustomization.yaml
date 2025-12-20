@@ -1,5 +1,6 @@
 namespace: flux-system
 
 resources:
+  - kube-system.kustomization.yaml
   - kyverno-system.kustomization.yaml
   - longhorn-system.kustomization.yaml
