@@ -41,10 +41,10 @@ spec:
           resources:
             limits:
               cpu: 1000m
-              memory: 2560Mi
+              memory: 3Gi
               ephemeral-storage: 1Gi
             requests:
               cpu: 500m
-              memory: 2048Mi
+              memory: 2.5Gi
               ephemeral-storage: 1Gi
       restartPolicy: Always
