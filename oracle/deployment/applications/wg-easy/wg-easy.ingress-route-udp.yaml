@@ -6,7 +6,7 @@ spec:
   entryPoints:
     - wireguard
   routes:
-    - match: Host(`a1flex-server1.oracle.cluster.parzival.space`)
+    - match: Host(`*`)
       kind: Rule
       services:
         - name: wg-easy
