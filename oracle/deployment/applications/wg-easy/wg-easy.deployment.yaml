@@ -41,21 +41,21 @@ spec:
             periodSeconds: 10
             successThreshold: 1
             tcpSocket:
-              port: http
+              port: dashboard
             timeoutSeconds: 1
           readinessProbe:
             failureThreshold: 3
             periodSeconds: 10
             successThreshold: 1
             tcpSocket:
-              port: http
+              port: dashboard
             timeoutSeconds: 1
           startupProbe:
             failureThreshold: 30
             periodSeconds: 5
             successThreshold: 1
             tcpSocket:
-              port: http
+              port: dashboard
             timeoutSeconds: 1
           securityContext:
             capabilities:
