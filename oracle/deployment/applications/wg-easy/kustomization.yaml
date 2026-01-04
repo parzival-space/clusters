@@ -1,0 +1,10 @@
+namespace: wg-easy
+
+resources:
+  - wg-easy.config-map.yaml
+  - wg-easy.deployment.yaml
+  - wg-easy.ingress-route-udp.yaml
+  - wg-easy.namespace.yaml
+  - wg-easy.persistent-storage-claim.yaml
+  - wg-easy.secret.yaml
+  - wg-easy.service.yaml

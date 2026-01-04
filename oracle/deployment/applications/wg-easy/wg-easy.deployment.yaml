@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wg-easy
+  labels:
+    app: wg-easy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 2
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: wg-easy
+  template:
+    metadata:
+      name: wg-easy
+      labels:
+        app: wg-easy
+    spec:
+      containers:
+        - name: wg-easy
+          image: ghcr.io/wg-easy/wg-easy:15
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 51820
+              protocol: UDP
+              name: wireguard
+            - containerPort: 51821
+              protocol: TCP
+              name: dashboard
+          envFrom:
+            - configMapRef:
+                name: wg-easy
+                optional: false
+            - secretRef:
+                name: wg-easy
+                optional: false
+          livenessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+            timeoutSeconds: 1
+          readinessProbe:
+            failureThreshold: 3
+            periodSeconds: 10
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+            timeoutSeconds: 1
+          startupProbe:
+            failureThreshold: 30
+            periodSeconds: 5
+            successThreshold: 1
+            tcpSocket:
+              port: dashboard
+            timeoutSeconds: 1
+          securityContext:
+            capabilities:
+              add:
+                - NET_ADMIN
+                - SYS_MODULE
+          volumeMounts:
+            - mountPath: /etc/wireguard
+              name: config
+      restartPolicy: Always
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: wg-easy
+
