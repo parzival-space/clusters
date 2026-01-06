@@ -6,7 +6,6 @@ spec:
   entryPoints:
     - wireguard
   routes:
-    - match: Host(`*`)
-      services:
+    - services:
         - name: wg-easy
           port: wireguard
