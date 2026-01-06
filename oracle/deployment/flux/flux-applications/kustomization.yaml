@@ -3,3 +3,4 @@ namespace: flux-system
 resources:
   - mc-router.kustomization.yaml
   - sxmf-minecraft.kustomization.yaml
+  - wg-easy.kustomization.yaml
