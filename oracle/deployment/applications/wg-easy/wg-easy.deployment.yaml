@@ -65,9 +65,16 @@ spec:
           volumeMounts:
             - mountPath: /etc/wireguard
               name: config
+            - mountPath: /lib/modules
+              readOnly: true
+              name: modules
       restartPolicy: Always
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: wg-easy
+        - name: modules
+          hostPath:
+            - path: '/run/current-system/kernel-modules/lib/modules'
+
 
