@@ -7,7 +7,6 @@ spec:
     - wireguard
   routes:
     - match: Host(`*`)
-      kind: Rule
       services:
         - name: wg-easy
           port: wireguard
