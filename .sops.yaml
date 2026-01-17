@@ -5,6 +5,7 @@
 keys:
   - &edge age1y59wyvraz4g4d4lmsz9r2rhs6kycunvg538ystukfjtm6jam9uvqx94s7k
   - &oracle age1tyjaypk0xxzs4p7lecvdsxnsh0223d2jdq5dny2prjkgyzwn74eq08uqat
+  - &typej age1sl4vsymlq5h3vl343gyd9h6ne0za9wnrs3z50ehr9gkftfw77c5qa26554
 
 creation_rules:
   - age: [*edge]
@@ -16,4 +17,9 @@ creation_rules:
     path_regex: 'oracle/nix/secrets.yaml$'
   - age: [*oracle]
     path_regex: 'oracle/deployment/.*secret.yaml'
+    encrypted_regex: ^(data|stringData)$
+  - age: [*typej]
+    path_regex: 'typej/nix/secrets.yaml$'
+  - age: [*typej]
+    path_regex: 'typej/deployment/.*secret.yaml'
     encrypted_regex: ^(data|stringData)$
