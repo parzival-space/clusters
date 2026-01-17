@@ -29,7 +29,7 @@
         deployment = {
           targetHost = "pi4-agent1.typej";
           targetPort = 22;
-          targetUser = "nixos";
+          targetUser = "parzival";
           tags = [ "typej" ];
         };
 
@@ -42,7 +42,7 @@
         nixpkgs.system = "aarch64-linux";
 
         deployment = {
-          targetHost = "10.0.0.96"; # pi4-agent2.typej
+          targetHost = "pi4-agent2.typej";
           targetPort = 22;
           targetUser = "parzival";
           tags = [ "typej" ];
