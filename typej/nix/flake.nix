@@ -23,6 +23,21 @@
         specialArgs = { inherit sops-nix nixos-hardware; };
       };
 
+      neo50q-agent1 = {
+        nixpkgs.system = "x86_64-linux";
+
+        deployment = {
+          targetHost = "neo50q-agent1.typej";
+          targetPort = 22;
+          targetUser = "parzival";
+          tags = [ "typej" ];
+        };
+
+        imports = [
+          ./nodes/neo50q-agent1/configuration.nix
+        ];
+      };
+
       pi4-agent1 = {
         nixpkgs.system = "aarch64-linux";
 
