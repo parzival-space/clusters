@@ -1,6 +1,7 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     colmena = {
       url = "github:zhaofengli/colmena";
@@ -12,14 +13,14 @@
     };
   };
 
-  outputs = { nixpkgs, colmena, sops-nix, ... }:
+  outputs = { nixpkgs, colmena, sops-nix, nixos-hardware, ... }:
   {
     colmenaHive = colmena.lib.makeHive {
       meta = {
         nixpkgs = import nixpkgs {
           system = "x86_64-linux";
         };
-        specialArgs = { inherit sops-nix; };
+        specialArgs = { inherit sops-nix nixos-hardware; };
       };
 
       pi4-agent1 = {
@@ -34,6 +35,21 @@
 
         imports = [
           ./nodes/pi4-agent1/configuration.nix
+        ];
+      };
+
+      pi4-agent2 = {
+        nixpkgs.system = "aarch64-linux";
+
+        deployment = {
+          targetHost = "10.0.0.96"; # pi4-agent2.typej
+          targetPort = 22;
+          targetUser = "parzival";
+          tags = [ "typej" ];
+        };
+
+        imports = [
+          ./nodes/pi4-agent2/configuration.nix
         ];
       };
     };
