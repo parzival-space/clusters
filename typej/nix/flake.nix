@@ -67,6 +67,21 @@
           ./nodes/pi4-agent3/configuration.nix
         ];
       };
+
+      pi4-agent4 = {
+        nixpkgs.system = "aarch64-linux";
+
+        deployment = {
+          targetHost = "pi4-agent4.typej";
+          targetPort = 22;
+          targetUser = "parzival";
+          tags = [ "typej" ];
+        };
+
+        imports = [
+          ./nodes/pi4-agent4/configuration.nix
+        ];
+      };
     };
   };
 }
