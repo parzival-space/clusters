@@ -9,6 +9,7 @@
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ ];
   boot.extraModulePackages = [ ];
+  boot.loader.raspberryPi.bootloader = "kernel";
 
   fileSystems = {
     "/boot/firmware" = {
