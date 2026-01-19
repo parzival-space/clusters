@@ -11,13 +11,15 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # nixinate as alternative to colmena, might be phased out later
+    nixinate.url = "github:matthewcroughan/nixinate";
     colmena = {
       url = "github:zhaofengli/colmena";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { self, nixpkgs, nixos-hardware, nixos-raspberrypi, sops-nix, colmena }@inputs: {
+  outputs = { self, nixpkgs, nixos-hardware, nixos-raspberrypi, sops-nix, colmena, nixinate }@inputs: {
 
     colmenaHive = inputs.colmena.lib.makeHive ({
       meta = {
@@ -30,10 +32,11 @@
       imports = value._module.args.modules;
     }) self.nixosConfigurations);
 
+    apps = nixinate.nixinate.x86_64-linux self;
+
     nixosConfigurations = {
       pi5-master1 = inputs.nixos-raspberrypi.lib.nixosSystem {
         specialArgs = inputs;
-        extraModules = [ inputs.colmena.nixosModules.deploymentOptions ];
         modules = [
           {
             # Hardware specific configuration
@@ -44,8 +47,13 @@
               raspberry-pi-5.bluetooth
             ];
           }
-
-          ./nodes/pi5-master1/configuration.nix
+          (import ./nodes/pi5-master1/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "pi5-master1.typej";
+              sshUser = "parzival";
+            };
+          }
         ];
       };
 
@@ -53,27 +61,66 @@
       neo50q-agent1 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
         modules = [
-          ./nodes/neo50q-agent1/configuration.nix ];
+          (import ./nodes/neo50q-agent1/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "neo50q-agent1.typej";
+              sshUser = "parzival";
+            };
+          }
+        ];
       };
 
       pi4-agent1 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
-        modules = [ ./nodes/pi4-agent1/configuration.nix ];
+        modules = [
+          (import ./nodes/pi4-agent1/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "pi4-agent1.typej";
+              sshUser = "parzival";
+            };
+          }
+        ];
       };
 
       pi4-agent2 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
-        modules = [ ./nodes/pi4-agent2/configuration.nix ];
+        modules = [
+          (import ./nodes/pi4-agent2/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "pi4-agent2.typej";
+              sshUser = "parzival";
+            };
+          }
+        ];
       };
 
       pi4-agent3 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
-        modules = [ ./nodes/pi4-agent3/configuration.nix ];
+        modules = [
+          (import ./nodes/pi4-agent3/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "pi4-agent3.typej";
+              sshUser = "parzival";
+            };
+          }
+        ];
       };
 
       pi4-agent4 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
-        modules = [ ./nodes/pi4-agent4/configuration.nix ];
+        modules = [
+          (import ./nodes/pi4-agent4/configuration.nix)
+          {
+            _module.args.nixinate = {
+              host = "pi4-agent4.typej";
+              sshUser = "parzival";
+            };
+          }
+        ];
       };
     };
   };
