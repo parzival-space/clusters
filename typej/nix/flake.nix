@@ -19,14 +19,16 @@
 
   outputs = { self, nixpkgs, nixos-hardware, nixos-raspberrypi, sops-nix, colmena }@inputs: {
 
-    colmena = {
+    colmenaHive = inputs.colmena.lib.makeHive ({
       meta = {
         nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
         nodeNixpkgs = builtins.mapAttrs (name: value: value.pkgs) self.nixosConfigurations;
         nodeSpecialArgs = builtins.mapAttrs (name: value: value._module.specialArgs) self.nixosConfigurations;
       };
-    } // builtins.mapAttrs (name: value: { imports = value._module.args.modules; }) self.nixosConfigurations;
-    colmenaHive = inputs.colmena.lib.makeHive self.colmena;
+    } // builtins.mapAttrs (name: value: {
+      nixpkgs.system = value.pkgs.stdenv.hostPlatform.system;
+      imports = value._module.args.modules;
+    }) self.nixosConfigurations);
 
     nixosConfigurations = {
       pi5-master1 = inputs.nixos-raspberrypi.lib.nixosSystem {
@@ -43,9 +45,10 @@
             ];
           }
 
-          ../nix/nodes/pi5-master1/configuration.nix
+          ./nodes/pi5-master1/configuration.nix
         ];
       };
+
 
       neo50q-agent1 = nixpkgs.lib.nixosSystem {
         specialArgs = inputs;
