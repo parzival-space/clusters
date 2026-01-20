@@ -1,0 +1,5 @@
+namespace: kube-system
+
+resources:
+  - ./traefik.helm-chart-config.yaml
+  - ./traefik-auth-cloudflare.secret.yaml
