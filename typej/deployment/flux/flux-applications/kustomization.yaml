@@ -1,0 +1,4 @@
+namespace: flux-system
+
+resources:
+  - authentik.kustomization.yaml

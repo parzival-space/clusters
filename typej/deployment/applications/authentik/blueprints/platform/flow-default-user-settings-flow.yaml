@@ -1,0 +1,35 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - User settings flow
+entries:
+  # ensure default blueprints are executed first
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - User settings flow
+
+  # ensure required blueprints are executed first
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Platform - User settings avatar prompt
+
+
+  # Overwrite user settings
+  - model: authentik_stages_prompt.promptstage
+    identifiers:
+      name: default-user-settings
+    attrs:
+      fields:
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-username]]
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-name]]
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-email]]
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-locale]]
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-avatar]]
+        - !Find [authentik_stages_prompt.prompt, [name, default-user-settings-field-avatar-reset]]
+      validation_policies:
+        - !Find [authentik_policies_expression.expressionpolicy, [name, default-user-settings-authorization]]
+        - !Find [authentik_policies_expression.expressionpolicy, [name, default-user-settings-avatar-authorization]]

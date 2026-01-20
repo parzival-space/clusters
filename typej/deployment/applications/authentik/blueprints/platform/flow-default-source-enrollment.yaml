@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - Source enrollment flow
+entries:
+  # ensure default blueprints are executed first
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Source enrollment flow
+
+  # Update Enrollment Policy: Enroll new users as internal users
+  - model: authentik_stages_user_write.userwritestage
+    identifiers:
+      name: default-source-enrollment-write
+    attrs:
+      user_type: internal

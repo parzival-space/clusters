@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - Brand
+  labels:
+    blueprints.goauthentik.io/description: Configures the default Brand
+entries:
+  # wait for other blueprints
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Default - Authentication flow
+      required: false
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Default - Invalidation flow
+      required: false
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      identifiers:
+        name: Default - User settings flow
+      required: false
+
+  # delete default brand
+  - model: authentik_brands.brand
+    identifiers:
+      domain: authentik-default
+      default: true
+    state: absent
+
+  # configure default brand
+  - model: authentik_brands.brand
+    identifiers:
+      domain: platform-brand
+      default: true
+    attrs:
+      flow_authentication: !Find [authentik_flows.flow, [slug, default-authentication-flow]]
+      flow_invalidation: !Find [authentik_flows.flow, [slug, default-invalidation-flow]]
+      flow_user_settings: !Find [authentik_flows.flow, [slug, default-user-settings-flow]]
+      branding_title: parzi.cloud
+#      branding_custom_css: |
+#        :root {
+#          --ak-accent: #2bb0ff !important;
+#        }
