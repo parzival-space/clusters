@@ -34,6 +34,13 @@
     serverAddr = "https://pi5-master1.typej:6443";
   };
 
+  # configure openscsi
+  environment.systemPackages = [ pkgs.nfs-utils ];
+  services.openiscsi = {
+    enable = true;
+    name = "${config.networking.hostName}-initiatorhost";
+  };
+
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
   # on your system were taken. It‘s perfectly fine and recommended to leave

@@ -39,6 +39,13 @@
     ];
   };
 
+  # configure openscsi
+  environment.systemPackages = [ pkgs.nfs-utils ];
+  services.openiscsi = {
+    enable = true;
+    name = "${config.networking.hostName}-initiatorhost";
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

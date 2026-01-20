@@ -41,6 +41,13 @@
     serverAddr = "https://pi5-master1.typej:6443";
   };
 
+  # configure openscsi
+  environment.systemPackages = [ pkgs.nfs-utils ];
+  services.openiscsi = {
+    enable = true;
+    name = "${config.networking.hostName}-initiatorhost";
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];
