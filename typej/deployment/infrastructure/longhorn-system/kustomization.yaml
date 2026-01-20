@@ -1,0 +1,8 @@
+namespace: longhorn-system
+
+resources:
+  - longhorn.helm-release.yaml
+  - longhorn.helm-repository.yaml
+  - longhorn-nixos-path.config-map.yaml
+  - longhorn-nixos-path.cluster-policy.yaml
+  - longhorn-system.namespace.yaml
