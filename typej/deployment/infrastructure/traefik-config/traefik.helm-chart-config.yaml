@@ -1,0 +1,45 @@
+apiVersion: helm.cattle.io/v1
+kind: HelmChartConfig
+metadata:
+  name: traefik
+  namespace: kube-system
+spec:
+  valuesContent: |-
+    # Traefik entryPoints configuration for HTTP and HTTPS.
+    entryPoints:
+      web:
+        address: ":80"
+      websecure:
+        address: ":443"
+        tls:
+          enabled: true
+
+    persistence:
+      enabled: true
+      storageClass: longhorn
+
+    # required to fix issues with the ReadWriteOnce volume
+    updateStrategy:
+      type: Recreate
+
+    certificatesResolvers:
+      letsencrypt:
+        acme:
+          storage: /data/acme.json
+          dnsChallenge:
+            provider: cloudflare
+
+    env:
+      - name: CF_DNS_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: traefik-auth-cloudflare
+            key: token
+
+    # fix storage mount permissions
+    podSecurityContext:
+      runAsGroup: 65532
+      runAsNonRoot: true
+      runAsUser: 65532
+      fsGroup: 65532
+      fsGroupChangePolicy: "OnRootMismatch"
