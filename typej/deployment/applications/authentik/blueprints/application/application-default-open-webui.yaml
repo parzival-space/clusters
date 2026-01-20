@@ -1,0 +1,67 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Application - Open WebUI
+context:
+  client_id: !Env APPLICATION_OPEN_WEBUI_CLIENT_ID
+  client_secret: !Env APPLICATION_OPEN_WEBUI_CLIENT_SECRET
+entries:
+  # requirements
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Provider invalidation flow
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Provider authorization flow (explicit consent)
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: System - OAuth2 Provider - Scopes
+
+  # oidc provider
+  - model: authentik_providers_oauth2.oauth2provider
+    id: provider-open-webui
+    identifiers:
+      name: Provider for Open WebUI
+    attrs:
+      name: Provider for Open WebUI
+      authorization_flow: !Find [ authentik_flows.flow, [ slug, default-provider-authorization-explicit-consent ] ]
+      invalidation_flow: !Find [ authentik_flows.flow, [ slug, default-provider-invalidation-flow ] ]
+      client_type: confidential
+      client_id: !Context client_id
+      client_secret: !Context client_secret
+      redirect_uris:
+        - url: (?:https|http)://ai\.parzi\.cloud/.*
+          matching_mode: regex
+        - url: (?:https|http)://chat\.parzi\.cloud/.*
+          matching_mode: regex
+      access_code_validity: "minutes=1"
+      access_token_validity: "minutes=5"
+      refresh_token_validity: "days=30"
+      sub_mode: hashed_user_id
+      signing_key: !Find [authentik_crypto.certificatekeypair, [name, "authentik Self-signed Certificate"]]
+      property_mappings:
+        - !Find [ authentik_providers_oauth2.scopemapping, [ name, "authentik default OAuth Mapping: OpenID 'openid'" ] ]
+        - !Find [ authentik_providers_oauth2.scopemapping, [ name, "authentik default OAuth Mapping: OpenID 'email'" ] ]
+        - !Find [ authentik_providers_oauth2.scopemapping, [ name, "authentik default OAuth Mapping: OpenID 'profile'" ] ]
+
+  # application
+  - model: authentik_core.application
+    identifiers:
+      name: Open WebUI
+      slug: application-open-webui
+    attrs:
+      name: Open WebUI
+      slug: application-open-webui
+      policy_engine_mode: any
+      provider_type: openidconnect
+      provider: !KeyOf provider-open-webui
+      meta_launch_url: "https://ai.parzi.cloud/"
+      meta_publisher: Open WebUI
+      meta_description: Interface for interacting with large language models.
+      icon: "https://ai.parzi.cloud/static/favicon.svg"

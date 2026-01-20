@@ -1,0 +1,26 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - Authentication flow
+entries:
+  # ensure default blueprint is executed before
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Authentication flow
+
+  # ensure required blueprints are executed first
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Provider - OAuth2 Provider - Discord
+
+  # Add Discord authentication to login page
+  - model: authentik_stages_identification.identificationstage
+    identifiers:
+      name: default-authentication-identification
+    attrs:
+      sources:
+        - !Find [authentik_sources_oauth.oauthsource, [slug, provider-oauth2-discord]]

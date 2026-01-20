@@ -1,0 +1,82 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Provider - OAuth2 Provider - Discord
+  labels:
+    blueprints.goauthentik.io/description: Configures Discord as a OAuth2 Provider and adds source mappings
+context:
+  client_id: !Env [PROVIDER_OAUTH_DISCORD_CLIENT_ID, null]
+  client_secret: !Env [PROVIDER_OAUTH_DISCORD_CLIENT_SECRET, null]
+  user_path_template: "users"
+  additional_scopes: "identify guilds guilds.members.read"
+entries:
+  # execute after default flows
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Source authentication flow
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Source enrollment flow
+
+  # Mapping for avatar image, username, display name and email
+  - model: authentik_sources_oauth.oauthsourcepropertymapping
+    id: provider-oauth2-discord-mapping
+    identifiers:
+      name: provider-oauth2-discord-mapping
+    attrs:
+      name: provider-oauth2-discord-mapping
+      expression: |
+        import base64
+        import requests
+        from authentik.core.models import Group
+
+        #Set these values
+        AVATAR_SIZE = "64" # Valid avatar size values: 16,32,64,128,256,512,1024.
+        # Larger values than 64 may cause HTTP error 431 on applications/providers
+        # due to headers being too large.
+
+        # Generate avatar URL
+        avatar_url = None
+        if info.get("avatar"):
+            avatar_url = (f"https://cdn.discordapp.com/avatars/{info.get('id')}/"
+                          f"{info.get('avatar')}.png?size={AVATAR_SIZE}")
+        
+        # Return user data
+        return {
+            "name": info.get("global_name"),
+            "attributes.discord": {
+                "id": info.get("id"),
+                "username": info.get("username"),
+                "discriminator": info.get("discriminator"),
+                "email": info.get("email"),
+                "avatar": info.get("avatar"),
+                "avatar_url": avatar_url
+            },
+            "groups": []
+        }
+
+  # Discord OAuth2 Provider
+  - model: authentik_sources_oauth.oauthsource
+    identifiers:
+      name: Discord
+      slug: provider-oauth2-discord
+    attrs:
+      name: Discord
+      slug: provider-oauth2-discord
+      enabled: true
+      authentication_flow: !Find [authentik_flows.Flow, [slug, default-source-authentication]]
+      enrollment_flow: !Find [authentik_flows.Flow, [slug, default-source-enrollment]]
+      policy_engine_mode: any
+      user_matching_mode: identifier
+      user_path_template: !Context user_path_template
+      group_matching_mode: identifier
+      provider_type: discord
+      consumer_key: !Context client_id
+      consumer_secret: !Context client_secret
+      additional_scopes: !Context additional_scopes
+      user_property_mappings:
+        - !KeyOf provider-oauth2-discord-mapping

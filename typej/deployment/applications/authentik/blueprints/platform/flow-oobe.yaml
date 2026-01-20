@@ -1,0 +1,18 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - Disable Out-of-box-experience flow
+  labels:
+    blueprints.goauthentik.io/description: Disables the Out-of-bot-experience
+entries:
+  # ensure default blueprints are executed first
+  - model: authentik_blueprints.metaapplyblueprint
+    attrs:
+      required: false
+      identifiers:
+        name: Default - Out-of-box-experience flow
+
+  - model: authentik_flows.flow
+    state: absent
+    identifiers:
+      slug: initial-setup

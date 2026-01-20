@@ -1,0 +1,131 @@
+# yaml-language-server: $schema=https://goauthentik.io/blueprints/schema.json
+version: 1
+metadata:
+  name: Platform - User settings avatar prompt
+  labels:
+    blueprints.goauthentik.io/description: Provides prompts for users to allow changing their avatars
+entries:
+  # avatar upload prompt
+  - model: authentik_stages_prompt.prompt
+    identifiers:
+      name: default-user-settings-field-avatar
+    attrs:
+      name: default-user-settings-field-avatar
+      label: User Avatar
+      field_key: attributes.avatar
+      type: file
+      required: false
+
+  # avatar reset prompt
+  - model: authentik_stages_prompt.prompt
+    identifiers:
+      name: default-user-settings-field-avatar-reset
+    attrs:
+      name: default-user-settings-field-avatar-reset
+      label: Reset User Avatar
+      field_key: attributes.avatar_reset
+      order: 206
+      type: checkbox
+      required: false
+
+  # avatar upload policy
+  - model: authentik_policies_expression.expressionpolicy
+    identifiers:
+      name: default-user-settings-avatar-authorization
+    attrs:
+      name: default-user-settings-avatar-authorization
+      expression: |
+        FILE_PATH = "/media/user-avatars/"
+        MAX_UPLOAD_SIZE = 5 * 1024 * 1024
+        ACCEPTED_FILE_TYPES = {
+            "image/png": "png",
+            "image/jpeg": "jpeg",
+            "image/webp": "webp",
+            # "image/svg+xml": "svg", # if you trust your users not to upload malicious svg files
+            "image/gif": "gif",
+            "image/bmp": "bmp",
+            "image/vnd.microsoft.icon": "ico"
+        }
+        
+        # dynamically get the base url, can be overwritten
+        BASE_URL = f"{request.http_request.scheme}://{request.http_request.get_host()}"
+        
+        EMPTY_FILE = "data:application/octet-stream;base64,"
+        
+        from uuid import uuid4
+        from base64 import b64decode
+        from os import remove
+        from os import makedirs
+        from os.path import isfile
+        
+        
+        def naturalsize(value, binary=False, format="%.1f"):
+            units = ["B", "KB", "MB", "GB", "TB", "PB", "EB"]
+            if binary:
+                step = 1024.0
+                units = ["B", "KiB", "MiB", "GiB", "TiB", "PiB", "EiB"]
+            else:
+                step = 1000.0
+        
+            size = float(value)
+            for unit in units:
+                if abs(size) < step:
+                    return (format % size).rstrip("0").rstrip(".") + " " + unit
+                size /= step
+            return (format % size).rstrip("0").rstrip(".") + " " + units[-1]
+        
+        def remove_old_avatar_file():
+            avatar = request.user.attributes.get("avatar", None) # ex: https://hostname/media/user-avatars/image.png
+            if avatar:
+                components = avatar.split(BASE_URL + FILE_PATH, 1)
+                if len(components) == 2 and components[0] == "" and components[1]:
+                    old_filename = FILE_PATH + components[1]
+                    if isfile(old_filename):
+                        remove(old_filename)
+        
+        
+        makedirs(FILE_PATH, exist_ok=True)
+        prompt_data = request.context.get("prompt_data")
+        avatar_overwritten = False
+        
+        if "avatar" in prompt_data.get("attributes", {}):
+            avatar = prompt_data["attributes"]["avatar"]
+            if avatar == EMPTY_FILE:
+                # No upload file specified, ignore
+                del prompt_data["attributes"]["avatar"]
+            else:
+                avatar_mimetype = avatar.split("data:", 1)[1].split(";", 1)[0]
+                if avatar_mimetype not in ACCEPTED_FILE_TYPES:
+                    ak_message("User avatar must be an image (" + ", ".join(ACCEPTED_FILE_TYPES.values()) + ") file.")
+                    return False
+        
+                # Now we know it is one of the accepted image file types
+                avatar_base64 = avatar.split(",", 1)[1]
+                avatar_binary = b64decode(avatar_base64)
+                avatar_size = len(avatar_binary)
+                if avatar_size > MAX_UPLOAD_SIZE:
+                    ak_message("User avatar file size must not exceed " + naturalsize(MAX_UPLOAD_SIZE, binary = True, format = "%.0f") + ".")
+                    return False
+        
+                # Set a random file name with extension reflecting mime type
+                avatar_filename = str(uuid4()) + "." + ACCEPTED_FILE_TYPES[avatar_mimetype]
+        
+                try:
+                    with (open(FILE_PATH + avatar_filename, "wb") as f):
+                        f.write(avatar_binary)
+                except:
+                    ak_message("Could not write avatar file.")
+                    return False
+        
+                avatar_overwritten = True
+                remove_old_avatar_file()
+        
+                prompt_data["attributes"]["avatar"] = BASE_URL + FILE_PATH + avatar_filename
+        
+        if "avatar_reset" in prompt_data.get("attributes", {}):
+            del prompt_data["attributes"]["avatar_reset"]
+            if not avatar_overwritten:
+                prompt_data["attributes"]["avatar"] = None
+                ak_message("Deleted user avatar.")
+        
+        return True

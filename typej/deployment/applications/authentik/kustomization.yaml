@@ -1,0 +1,32 @@
+namespace: authentik
+
+resources:
+  - authentik.helm-release.yaml
+  - authentik.helm-repository.yaml
+  - authentik.namespace.yaml
+  - authentik-secrets.secret.yaml
+  - authentik-values.config-map.yaml
+
+configMapGenerator:
+  - name: authentik-blueprints-application
+    options:
+      disableNameSuffixHash: true
+    files:
+      - blueprints/application/application-default-open-webui.yaml
+      - blueprints/application/application-default-send.yaml
+  - name: authentik-blueprints-platform
+    options:
+      disableNameSuffixHash: true
+    files:
+      - blueprints/platform/default-brand.yaml
+      - blueprints/platform/flow-default-authentication-flow.yaml
+      - blueprints/platform/flow-default-source-enrollment.yaml
+      - blueprints/platform/flow-default-user-settings-flow.yaml
+      - blueprints/platform/flow-oobe.yaml
+      - blueprints/platform/prompt-default-user-settings-avatar.yaml
+      - blueprints/platform/system-providers-oauth2.yaml
+  - name: authentik-blueprints-provider
+    options:
+      disableNameSuffixHash: true
+    files:
+      - blueprints/provider/provider-oauth2-discord.yaml

@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authentik-values
+  namespace: authentik
+data:
+  values.yaml: |
+    authentik:
+      error_reporting:
+        enabled: true
+
+    server:
+      ingress:
+        enabled: true
+        ingressClassName: traefik
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+        hosts:
+          - auth.parzival.space
+          - parzi.cloud
+        tls: []
+
+    postgresql:
+      enabled: true
+      persistence:
+        enabled: true
+        storageClass: longhorn
+        accessModes:
+          - ReadWriteOnce
+
+    redis:
+      enabled: true
+
+    # load blueprints from config maps
+    blueprints:
+      configMaps:
+        - "authentik-blueprints-application"
+        - "authentik-blueprints-platform"
+        - "authentik-blueprints-provider"
+
+    global:
+      envFrom:
+        - secretRef:
+            name: authentik-secrets
