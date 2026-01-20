@@ -1,0 +1,130 @@
+{
+  description = "NixOS configurations for the TypeJ mini-rack cluster";
+
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nixos-raspberrypi.url = "github:nvmd/nixos-raspberrypi/main";
+
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    colmena = {
+      url = "github:zhaofengli/colmena";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+  };
+
+  outputs = { self, nixpkgs, nixos-hardware, nixos-raspberrypi, sops-nix, colmena }@inputs: {
+
+    colmenaHive = inputs.colmena.lib.makeHive ({
+      meta = {
+        nixpkgs = import inputs.nixpkgs { system = "x86_64-linux"; };
+        nodeNixpkgs = builtins.mapAttrs (name: value: value.pkgs) self.nixosConfigurations;
+        nodeSpecialArgs = builtins.mapAttrs (name: value: value._module.specialArgs) self.nixosConfigurations;
+      };
+    } // builtins.mapAttrs (name: value: {
+      nixpkgs.system = value.pkgs.stdenv.hostPlatform.system;
+      imports = value._module.args.modules;
+      deployment = value._module.args.deployment;
+    }) self.nixosConfigurations);
+
+    nixosConfigurations = {
+      pi5-master1 = inputs.nixos-raspberrypi.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "aarch64-linux";
+        modules = [
+          {
+            # Hardware specific configuration
+            imports = with nixos-raspberrypi.nixosModules; [
+              raspberry-pi-5.base
+              raspberry-pi-5.page-size-16k
+              raspberry-pi-5.display-vc4
+              raspberry-pi-5.bluetooth
+            ];
+          }
+          (import ./nodes/pi5-master1/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "pi5-master1.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+
+
+      neo50q-agent1 = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "x86_64-linux";
+        modules = [
+          (import ./nodes/neo50q-agent1/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "neo50q-agent1.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+
+      pi4-agent1 = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "aarch64-linux";
+        modules = [
+          (import ./nodes/pi4-agent1/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "pi4-agent1.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+
+      pi4-agent2 = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "aarch64-linux";
+        modules = [
+          (import ./nodes/pi4-agent2/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "pi4-agent2.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+
+      pi4-agent3 = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "aarch64-linux";
+        modules = [
+          (import ./nodes/pi4-agent3/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "pi4-agent3.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+
+      pi4-agent4 = nixpkgs.lib.nixosSystem {
+        specialArgs = inputs;
+        system = "aarch64-linux";
+        modules = [
+          (import ./nodes/pi4-agent4/configuration.nix)
+          {
+            _module.args.deployment = {
+              targetHost = "pi4-agent4.typej";
+              targetUser = "parzival";
+            };
+          }
+        ];
+      };
+    };
+  };
+}
