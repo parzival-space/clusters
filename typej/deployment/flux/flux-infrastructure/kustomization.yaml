@@ -3,3 +3,4 @@ namespace: flux-system
 resources:
   - kyverno-system.kustomization.yaml
   - longhorn-system.kustomization.yaml
+  - traefik-config.kustomization.yaml
