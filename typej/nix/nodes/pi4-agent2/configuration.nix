@@ -20,6 +20,27 @@
   networking.networkmanager.enable = true;
   networking.enableIPv6 = true;
 
+  # configure firewall
+  # 6443 - Kubernetes API server
+  # 80 - HTTP
+  # 443 - HTTPS
+  # 8472 - Flannel VXLAN networking
+  networking.firewall.allowedTCPPorts = [ 6443 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 8472 ];
+
+  boot.kernelParams = [
+    "cgroup_memory=1"
+    "cgroup_enable=memory"
+  ];
+
+  sops.secrets."k3s/token" = { };
+  services.k3s = {
+    enable = true;
+    role = "agent";
+    tokenFile = config.sops.secrets."k3s/token".path;
+    serverAddr = "https://pi5-master1.typej:6443";
+  };
+
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
   # networking.firewall.allowedUDPPorts = [ ... ];

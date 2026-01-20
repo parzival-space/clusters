@@ -6,6 +6,7 @@
     extraGroups = [
       "wheel"
       "networkmanager"
+      "audio"
     ];
 
     openssh.authorizedKeys.keys = [

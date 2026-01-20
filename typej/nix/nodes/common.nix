@@ -1,8 +1,15 @@
-{ pkgs, ... }:
+{ pkgs, sops-nix, ... }:
 {
   imports = [
+    sops-nix.nixosModules.sops
     ./users.nix
   ];
+
+  # Configure SOPS
+  sops.defaultSopsFile = ../secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  # the age key file is expected to be already present on the target system
+  sops.age.keyFile = "/var/lib/sops-nix/key.txt";
 
   # Configure Nix
   nix = {

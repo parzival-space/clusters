@@ -9,21 +9,30 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   # Set your time zone.
   time.timeZone = "Europe/Berlin";
+
+  networking.hostName = "neo50q-agent1"; # Define your hostname.
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;
   networking.enableIPv6 = true;
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # configure firewall
+  # 6443 - Kubernetes API server
+  # 80 - HTTP
+  # 443 - HTTPS
+  # 8472 - Flannel VXLAN networking
+  networking.firewall.allowedTCPPorts = [ 6443 80 443 ];
+  networking.firewall.allowedUDPPorts = [ 8472 ];
+
+  sops.secrets."k3s/token" = { };
+  services.k3s = {
+    enable = true;
+    role = "agent";
+    tokenFile = config.sops.secrets."k3s/token".path;
+    serverAddr = "https://pi5-master1.typej:6443";
+  };
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
