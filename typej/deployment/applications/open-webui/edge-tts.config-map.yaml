@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: edge-tts
+data:
+  PORT: "5050" # default port
+
+  API_KEY: "edge_tts_pseudo_api_key" # no secret api key, communicates internally
+  REQUIRE_API_KEY: "False"
+
+  DEFAULT_LANGUAGE: "de-DE"
+  DEFAULT_VOICE: "de-DE-FlorianMultilingualNeural"
+  DEFAULT_SPEED: "1.0"
+  DEFAULT_RESPONSE_FORMAT: "mp3"
+
+  REMOVE_FILTER: "False"
+  EXPAND_API: "True"
+  DETAILED_ERROR_LOGGING: "True"

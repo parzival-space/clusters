@@ -1,0 +1,89 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: open-webui-values
+  namespace: open-webui
+data:
+  ENABLE_PERSISTENT_CONFIG: "False"
+  WEBUI_URL: "https://ai.parzi.cloud"
+
+  ENABLE_LOGIN_FORM: "False"
+  ENABLE_OAUTH_PERSISTENT_CONFIG: "False"
+  OAUTH_UPDATE_PICTURE_ON_LOGIN: "True"
+
+  RAG_OPENAI_API_BASE_URL: "https://openrouter.ai/api/v1"
+  RAG_EMBEDDING_ENGINE: "openai"
+  RAG_EMBEDDING_MODEL: "qwen/qwen3-embedding-8b"
+  RAG_RERANKING_MODEL_AUTO_UPDATE: "False"
+  RAG_EMBEDDING_MODEL_AUTO_UPDATE: "False"
+
+  # all user have access to all models
+  BYPASS_MODEL_ACCESS_CONTROL: "True"
+
+  DEFAULT_USER_ROLE: "user"
+  DEFAULT_MODELS: "openai/gpt-5-chat"
+
+#  WEBUI_BANNERS: |
+#    [
+#      {
+#        "id": "1",
+#        "type": "info",
+#        "title": "Access Over 340 Models",
+#        "content": "Explore more than 340 AI models available to you. To discover details about each model, visit: → https://openrouter.ai/models",
+#        "dismissible": true,
+#        "timestamp": 1000
+#      }
+#    ]
+
+  AUDIO_TTS_ENGINE: "openai"
+  AUDIO_TTS_MODEL: "tts-1-hd"
+  AUDIO_TTS_VOICE: "de-DE-FlorianMultilingualNeural"
+  #AUDIO_TTS_SPLIT_ON: "punctuation"
+  AUDIO_TTS_OPENAI_API_BASE_URL: "http://edge-tts.open-webui.svc.cluster.local:5050/v1"
+  AUDIO_TTS_OPENAI_API_KEY: "edge_tts_pseudo_api_key"
+  AUDIO_TTS_API_KEY: "edge_tts_pseudo_api_key" # I don't know why this exists
+
+  values.yaml: |
+    image:
+      repository: "ghcr.io/open-webui/open-webui"
+      tag: "v0.6.36"
+
+    # set according resource, since we are running a whisper model
+    resources:
+      requests:
+        cpu: "500m"
+        memory: "2Gi"
+      limits:
+        cpu: "750m"
+        memory: "2Gi"
+
+
+    # disable ollama (enabled by default)
+    ollama:
+      enabled: false
+
+    ingress:
+      enabled: true
+      class: traefik
+      tls: false
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+      host: "ai.parzi.cloud"
+
+    persistence:
+      enabled: true
+      size: 5Gi
+      storageClass: longhorn
+
+    logging:
+      level: debug
+
+    # some sensitive credentials are stored in the values secret
+    extraEnvFrom:
+      - configMapRef:
+          name: open-webui-values
+      - secretRef:
+          name: open-webui-values
+

@@ -2,3 +2,4 @@ namespace: flux-system
 
 resources:
   - authentik.kustomization.yaml
+  - open-webui.kustomization.yaml

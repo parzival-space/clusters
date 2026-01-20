@@ -1,0 +1,11 @@
+namespace: open-webui
+
+resources:
+  - edge-tts.config-map.yaml
+  - edge-tts.deployment.yaml
+  - edge-tts.service.yaml
+  - open-webui.helm-release.yaml
+  - open-webui.helm-repository.yaml
+  - open-webui.namespace.yaml
+  - open-webui-values.config-map.yaml
+  - open-webui-values.secret.yaml
