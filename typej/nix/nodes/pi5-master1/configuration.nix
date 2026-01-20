@@ -2,6 +2,7 @@
 {
   imports = [
     ../common.nix
+    ./wireguard-tunnel.nix
 
     ./hardware-configuration.nix
   ];
