@@ -21,7 +21,7 @@ data:
   BYPASS_MODEL_ACCESS_CONTROL: "True"
 
   DEFAULT_USER_ROLE: "user"
-  DEFAULT_MODELS: "openai/gpt-5-chat"
+  DEFAULT_MODELS: "switchpoint/router"
 
 #  WEBUI_BANNERS: |
 #    [
