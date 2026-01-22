@@ -7,38 +7,63 @@ data:
   ENABLE_PERSISTENT_CONFIG: "False"
   WEBUI_URL: "https://ai.parzi.cloud"
 
+  # oauth settings
   ENABLE_LOGIN_FORM: "False"
   ENABLE_OAUTH_PERSISTENT_CONFIG: "False"
   OAUTH_UPDATE_PICTURE_ON_LOGIN: "True"
 
+  # rag settings
   RAG_OPENAI_API_BASE_URL: "https://openrouter.ai/api/v1"
+  RAG_RERANKING_MODEL_AUTO_UPDATE: "False"
+  RAG_RERANKING_MODEL_TRUST_REMOTE_CODE: "False"
   RAG_EMBEDDING_ENGINE: "openai"
   RAG_EMBEDDING_MODEL: "qwen/qwen3-embedding-8b"
-  RAG_RERANKING_MODEL_AUTO_UPDATE: "False"
   RAG_EMBEDDING_MODEL_AUTO_UPDATE: "False"
+  RAG_EMBEDDING_MODEL_TRUST_REMOTE_CODE: "False"
 
-  # all user have access to all models
-  BYPASS_MODEL_ACCESS_CONTROL: "True"
-
+  # user defaults
   DEFAULT_USER_ROLE: "user"
   DEFAULT_MODELS: "switchpoint/router"
 
-#  WEBUI_BANNERS: |
-#    [
-#      {
-#        "id": "1",
-#        "type": "info",
-#        "title": "Access Over 340 Models",
-#        "content": "Explore more than 340 AI models available to you. To discover details about each model, visit: → https://openrouter.ai/models",
-#        "dismissible": true,
-#        "timestamp": 1000
-#      }
-#    ]
+  # all user have access to all models
+  BYPASS_MODEL_ACCESS_CONTROL: "False"
 
+  # upload limitations
+  FOLDER_MAX_FILE_COUNT: "3"
+
+  # feature toggles
+  ENABLE_CHANNELS: "False"
+  ENABLE_FOLDERS: "True"
+  ENABLE_NOTES: "True"
+  ENABLE_MEMORIES: "True"
+  ENABLE_USER_WEBHOOKS: "False"
+  ENABLE_TITLE_GENERATION: "True"
+  ENABLE_EVALUATION_ARENA_MODELS: "False"
+  ENABLE_TAGS_GENERATION: "False"
+  ENABLE_API_KEYS: "False" # disable user api keys for now
+  ENABLE_WEB_SEARCH: "True"
+  ENABLE_IMAGE_GENERATION: "False" # no nodes available for this feature
+
+  # reduce admin access (user privacy)
+  ENABLE_ADMIN_EXPORT: "False"
+  ENABLE_ADMIN_CHAT_ACCESS: "False"
+  ENABLE_ADMIN_WORKSPACE_CONTENT_ACCESS: "False" # deprecated, use below
+  BYPASS_ADMIN_ACCESS_CONTROL: "False"
+
+  # feature: code execution
+  ENABLE_CODE_EXECUTION: "True"
+  CODE_EXECUTION_ENGINE: "pyodide"
+  ENABLE_CODE_INTERPRETER: "True"
+  CODE_INTERPRETER_ENGINE: "pyodide"
+
+  # feature: autocomplete
+  ENABLE_AUTOCOMPLETE_GENERATION: "False"
+
+  # text-to-speech settings
   AUDIO_TTS_ENGINE: "openai"
   AUDIO_TTS_MODEL: "tts-1-hd"
   AUDIO_TTS_VOICE: "de-DE-FlorianMultilingualNeural"
-  #AUDIO_TTS_SPLIT_ON: "punctuation"
+  AUDIO_TTS_SPLIT_ON: "punctuation"
   AUDIO_TTS_OPENAI_API_BASE_URL: "http://edge-tts.open-webui.svc.cluster.local:5050/v1"
   AUDIO_TTS_OPENAI_API_KEY: "edge_tts_pseudo_api_key"
   AUDIO_TTS_API_KEY: "edge_tts_pseudo_api_key" # I don't know why this exists
