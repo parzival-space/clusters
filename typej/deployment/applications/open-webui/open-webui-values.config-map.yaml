@@ -167,9 +167,6 @@ data:
       size: 5Gi
       storageClass: longhorn
 
-    logging:
-      level: debug
-
     # some sensitive credentials are stored in the values secret
     extraEnvFrom:
       - configMapRef:
