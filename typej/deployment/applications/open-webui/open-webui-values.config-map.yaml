@@ -59,6 +59,12 @@ data:
   # feature: autocomplete
   ENABLE_AUTOCOMPLETE_GENERATION: "False"
 
+  # feature: web search
+  ENABLE_SEARCH_QUERY_GENERATION: "True"
+  WEB_SEARCH_CONCURRENT_REQUESTS: "1"
+  WEB_SEARCH_ENGINE: "duckduckgo"
+  DDGS_BACKEND: "duckduckgo"
+
   # text-to-speech settings
   AUDIO_TTS_ENGINE: "openai"
   AUDIO_TTS_MODEL: "tts-1-hd"
