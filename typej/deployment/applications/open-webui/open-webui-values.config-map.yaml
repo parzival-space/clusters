@@ -25,7 +25,7 @@ data:
   DEFAULT_USER_ROLE: "user"
   DEFAULT_MODELS: "switchpoint/router"
 
-  # all user have access to all models
+  # enable model access control (do not bypass per-model restrictions)
   BYPASS_MODEL_ACCESS_CONTROL: "False"
 
   # upload limitations
