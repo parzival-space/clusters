@@ -9,3 +9,10 @@ resources:
   - open-webui.namespace.yaml
   - open-webui-values.config-map.yaml
   - open-webui-values.secret.yaml
+
+configMapGenerator:
+  - name: open-webui-pipelines
+    options:
+      disableNameSuffixHash: true
+    files:
+      - pipelines/token_limit_pipeline.py

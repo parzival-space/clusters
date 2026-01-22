@@ -132,6 +132,21 @@ data:
         cpu: "750m"
         memory: "2Gi"
 
+    pipelines:
+      enabled: true
+      extraVolumes:
+        - name: custom-pipelines
+          configMap:
+            name: open-webui-pipelines
+      extraVolumeMounts:
+        - name: custom-pipelines
+          mountPath: /pipelines-import
+          readOnly: true
+      extraEnvVars:
+        - name: PIPELINES_URLS
+          value: "file:///pipelines-import/limit_max_tokens.py"
+        - name: TOKEN_LIMIT_MAX_TOKENS
+          value: "512"
 
     # disable ollama (enabled by default)
     ollama:
@@ -151,9 +166,6 @@ data:
       enabled: true
       size: 5Gi
       storageClass: longhorn
-
-    logging:
-      level: debug
 
     # some sensitive credentials are stored in the values secret
     extraEnvFrom:
