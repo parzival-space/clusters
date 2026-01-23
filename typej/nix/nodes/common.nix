@@ -53,6 +53,7 @@
     nano
     git
     curl
+    htop
   ];
 
   # Localization
