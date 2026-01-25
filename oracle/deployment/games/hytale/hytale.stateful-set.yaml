@@ -26,10 +26,10 @@ spec:
               protocol: UDP
           volumeMounts:
             - mountPath: /home/hytale/server-backups
-              subPath: /backups
+              subPath: backups
               name: hytale
             - mountPath: /home/hytale/server-files
-              subPath: /server
+              subPath: server
               name: hytale
           resources:
             requests:
