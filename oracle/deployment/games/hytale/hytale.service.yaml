@@ -9,5 +9,6 @@ spec:
     - protocol: UDP
       port: 5520
       targetPort: hytale
+      name: hytale
   type: ClusterIP
 
