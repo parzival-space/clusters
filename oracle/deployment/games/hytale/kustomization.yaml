@@ -1,0 +1,8 @@
+namespace: hytale
+
+resources:
+  - hytale.config-map.yaml
+  - hytale.ingress-route-udp.yaml
+  - hytale.namespace.yaml
+  - hytale.service.yaml
+  - hytale.stateful-set.yaml
