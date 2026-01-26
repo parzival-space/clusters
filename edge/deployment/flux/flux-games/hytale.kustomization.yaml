@@ -4,7 +4,7 @@ metadata:
   name: hytale
   namespace: flux-system
 spec:
-  path: ./oracle/deployment/games/hytale
+  path: ./edge/deployment/games/hytale
   prune: true
   interval: 5m
   sourceRef:
