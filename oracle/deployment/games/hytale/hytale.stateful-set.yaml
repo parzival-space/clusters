@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: hytale
-          image: indifferentbroccoli/hytale-server-docker:v1.0.6
+          image: indifferentbroccoli/hytale-server-docker:dev
           imagePullPolicy: IfNotPresent
           envFrom:
             - configMapRef:
