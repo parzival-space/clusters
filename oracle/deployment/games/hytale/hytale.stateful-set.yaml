@@ -35,10 +35,10 @@ spec:
           resources:
             requests:
               memory: "4Gi"
-              cpu: "1000m"
+              cpu: "512m"
             limits:
               memory: "7Gi"
-              cpu: "2000m"
+              cpu: "1000m"
   volumeClaimTemplates:
     - metadata:
         name: hytale
