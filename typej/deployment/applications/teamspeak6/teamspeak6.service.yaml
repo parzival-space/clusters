@@ -14,4 +14,4 @@ spec:
       port: 30033
       targetPort: file-transfer
       name: file-transfer
-  type: NodePort
+  type: ClusterIP

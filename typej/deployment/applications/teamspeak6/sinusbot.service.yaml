@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: sinusbot
+spec:
+  selector:
+    app: sinusbot
+  ports:
+    - protocol: TCP
+      port: 8087
+      targetPort: sinusbot
+  type: ClusterIP
+

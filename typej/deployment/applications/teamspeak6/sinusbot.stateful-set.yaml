@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: StatefulSet
+metadata:
+  name: sinusbot
+spec:
+  replicas: 1
+  serviceName: sinusbot
+  selector:
+    matchLabels:
+      app: sinusbot
+  template:
+    metadata:
+      name: sinusbot
+      labels:
+        app: sinusbot
+    spec:
+      containers:
+        - name: sinusbot
+          image: ghcr.io/gamer92000/sinusbot-docker:3c1f7f5
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: sinusbot
+              containerPort: 8087
+              protocol: TCP
+          volumeMounts:
+            - mountPath: /opt/sinusbot/scripts
+              subPath: scripts
+              name: sinusbot
+            - mountPath: /opt/sinusbot/data
+              subPath: data
+              name: sinusbot
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
+      restartPolicy: Always
+  volumeClaimTemplates:
+    - metadata:
+        name: sinusbot
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 5Gi
+        storageClassName: longhorn
+

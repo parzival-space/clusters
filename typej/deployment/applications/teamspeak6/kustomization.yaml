@@ -1,6 +1,8 @@
 namespace: teamspeak6
 
 resources:
+  - sinusbot.service.yaml
+  - sinusbot.stateful-set.yaml
   - teamspeak6.config-map.yaml
   - teamspeak6.ingress-route-tcp.yaml
   - teamspeak6.ingress-route-udp.yaml
