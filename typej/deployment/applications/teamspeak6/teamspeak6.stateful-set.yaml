@@ -13,6 +13,13 @@ spec:
       labels:
         app: teamspeak6
     spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox:latest
+          command: ["sh", "-c", "chown -R 1000:1000 /var/tsserver/data"]
+          volumeMounts:
+            - mountPath: /var/tsserver
+              name: teamspeak6
       containers:
         - name: teamspeak6
           image: teamspeaksystems/teamspeak6-server:latest
@@ -27,6 +34,13 @@ spec:
             - containerPort: 10080
               protocol: TCP
               name: web-query
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "512Mi"
+            limits:
+              cpu: "1000m"
+              memory: "1Gi"
           volumeMounts:
             - mountPath: /var/tsserver
               name: teamspeak6
