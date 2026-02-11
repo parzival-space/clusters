@@ -16,16 +16,20 @@ spec:
       initContainers:
         - name: fix-permissions
           image: teamspeaksystems/teamspeak6-server:latest
+          securityContext:
+            runAsUser: 0
           command:
             - /bin/sh
             - -c
             - |
               mkdir -p /var/tsserver/{logs,crashdumps,sql}
               cp -r /opt/tsserver/sql /var/tsserver/ || true
-              cp /config/tsserver.yaml /var/tsserver/tsserver.yaml
+              chown -R 1000:1000 /var/tsserver
           volumeMounts:
             - mountPath: /var/tsserver
               name: teamspeak6
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: teamspeak6
           image: teamspeaksystems/teamspeak6-server:latest
