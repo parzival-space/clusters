@@ -16,7 +16,7 @@ spec:
       initContainers:
         - name: fix-permissions
           image: busybox:latest
-          command: ["sh", "-c", "chown -R 1000:1000 /var/tsserver/data"]
+          command: ["sh", "-c", "chown -R 1000:1000 /var/tsserver"]
           volumeMounts:
             - mountPath: /var/tsserver
               name: teamspeak6
