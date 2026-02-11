@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: teamspeak6
+spec:
+  replicas: 1
+  serviceName: teamspeak6
+  selector:
+    matchLabels:
+      app: teamspeak6
+  template:
+    metadata:
+      labels:
+        app: teamspeak6
+    spec:
+      containers:
+        - name: teamspeak6
+          image: teamspeaksystems/teamspeak6-server:latest
+          restartPolicy: always
+          ports:
+            - containerPort: 9987
+              protocol: UDP
+              name: voice
+            - containerPort: 30033
+              protocol: TCP
+              name: file-transfer
+            - containerPort: 10080
+              protocol: TCP
+              name: web-query
+          volumeMounts:
+            - mountPath: /var/tsserver
+              name: teamspeak6
+          envFrom:
+            - configMapRef:
+                name: teamspeak6
+                optional: false
+  volumeClaimTemplates:
+    - metadata:
+        name: teamspeak6
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+        storageClassName: longhorn
+

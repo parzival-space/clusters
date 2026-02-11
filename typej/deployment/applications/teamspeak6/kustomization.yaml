@@ -1,0 +1,9 @@
+namespace: teamspeak6
+
+resources:
+  - teamspeak6.config-map.yaml
+  - teamspeak6.ingress-route-tcp.yaml
+  - teamspeak6.ingress-route-udp.yaml
+  - teamspeak6.namespace.yaml
+  - teamspeak6.service.yaml
+  - teamspeak6.stateful-set.yaml

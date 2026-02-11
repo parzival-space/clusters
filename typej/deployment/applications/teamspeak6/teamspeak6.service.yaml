@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: teamspeak6
+spec:
+  selector:
+    app: teamspeak6
+  ports:
+    - protocol: UDP
+      port: 9987
+      targetPort: voice
+      name: voice
+    - protocol: TCP
+      port: 30033
+      targetPort: file-transfer
+      name: file-transfer
+  type: NodePort

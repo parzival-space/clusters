@@ -14,6 +14,21 @@ spec:
         tls:
           enabled: true
 
+    # extra ports
+    ports:
+      teamspeak6-voice:
+        port: 9987
+        expose:
+          default: true
+        exposedPort: 9987
+        protocol: UDP
+      teamspeak6-file:
+        port: 30033
+        expose:
+          default: true
+        exposedPort: 30033
+        protocol: TCP
+
     persistence:
       enabled: true
       storageClass: longhorn

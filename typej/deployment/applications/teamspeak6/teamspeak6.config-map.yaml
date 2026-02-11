@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: teamspeak6
+data:
+  TSSERVER_LICENSE_ACCEPTED: "accept"
+

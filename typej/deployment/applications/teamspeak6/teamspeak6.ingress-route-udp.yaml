@@ -1,11 +1,11 @@
 apiVersion: traefik.io/v1alpha1
 kind: IngressRouteUDP
 metadata:
-  name: teamspeak6
+  name: hytale
 spec:
   entryPoints:
-    - teamspeak6-voice
+    - team
   routes:
     - services:
-        - name: hytale
-          port: 5520
+        - name: teamspeak6
+          port: voice
