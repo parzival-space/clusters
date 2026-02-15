@@ -29,6 +29,9 @@ spec:
             - mountPath: /opt/sinusbot/data
               subPath: data
               name: sinusbot
+          env:
+            - name: OVERRIDE_PASSWORD
+              value: "admin" # risk mitigated by network, not available outside container
           resources:
             requests:
               cpu: "100m"
