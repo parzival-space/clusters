@@ -1,8 +1,9 @@
-apiVersion: source.toolkit.fluxcd.io/v1
+apiVersion: source.toolkit.fluxcd.io/v1beta2
 kind: HelmRepository
 metadata:
   name: wg-easy
   namespace: wg-easy
 spec:
-  interval: 15m0s
-  url: oci://ghcr.io/slybase/charts/wg-easy
+  type: oci
+  interval: 10m
+  url: oci://ghcr.io/slybase/charts
