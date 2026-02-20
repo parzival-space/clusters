@@ -19,6 +19,7 @@ spec:
       init:
         existingSecret: "wg-secret"
         host: "a1flex-server1.oracle.cluster.parzival.space"
+      insecure: true
     serviceMonitor:
       create: false
     service:
