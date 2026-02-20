@@ -4,4 +4,4 @@ resources:
   - wg-easy.helm-release.yaml
   - wg-easy.helm-repository.yaml
   - wg-easy.namespace.yaml
-  - wg-easy.secret.yaml
+  - wg-secret.secret.yaml
