@@ -23,8 +23,8 @@ spec:
       create: false
     service:
       ui:
-        nodePort: 51821
+        type: ClusterIP
       wireguard:
-        nodePort: 51820
+        type: ClusterIP
     storage:
       storageClass: "longhorn"
