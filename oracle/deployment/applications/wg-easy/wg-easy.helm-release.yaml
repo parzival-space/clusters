@@ -1,0 +1,29 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: wg-easy
+  namespace: wg-easy
+spec:
+  chart:
+    spec:
+      chart: wgeasy
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: wg-easy
+      version: v0.6.2
+  interval: 15m0s
+  values:
+    config:
+      init:
+        existingSecret: "wg-easy"
+        host: "a1flex-server1.oracle.cluster.parzival.space"
+    serviceMonitor:
+      create: false
+    service:
+      ui:
+        nodePort: 51821
+      wireguard:
+        nodePort: 51820
+    storage:
+      storageClass: "longhorn"
