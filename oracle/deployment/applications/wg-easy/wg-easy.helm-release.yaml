@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: wgeasy
+      chart: wg-easy
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository

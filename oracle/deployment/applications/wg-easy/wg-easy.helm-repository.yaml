@@ -5,4 +5,4 @@ metadata:
   namespace: wg-easy
 spec:
   interval: 15m0s
-  url: ghcr.io/slybase/charts/wg-easy
+  url: oci://ghcr.io/slybase/charts/wg-easy
