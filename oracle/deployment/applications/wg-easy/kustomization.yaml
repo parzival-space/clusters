@@ -3,5 +3,6 @@ namespace: wg-easy
 resources:
   - wg-easy.helm-release.yaml
   - wg-easy.helm-repository.yaml
+  - wg-easy.ingress-route-udp.yaml
   - wg-easy.namespace.yaml
   - wg-secret.secret.yaml
