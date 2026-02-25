@@ -121,7 +121,7 @@ data:
   values.yaml: |
     image:
       repository: "ghcr.io/open-webui/open-webui"
-      tag: "v0.7.2"
+      tag: "v0.8.5"
 
     # set according resource, since we are running a whisper model
     resources:
