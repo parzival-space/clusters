@@ -67,7 +67,7 @@ data:
 
   # feature: web loader
   WEB_LOADER_ENGINE: "playwright"
-  PLAYWRIGHT_WS_URL: "ws://playwrigfht.open-webui.svc.cluster.local:3000"
+  PLAYWRIGHT_WS_URL: "ws://playwright.open-webui.svc.cluster.local:3000"
   PLAYWRIGHT_TIMEOUT: "30000" # ms
 
   # text-to-speech settings
