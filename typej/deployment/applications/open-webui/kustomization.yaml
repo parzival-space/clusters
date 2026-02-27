@@ -9,6 +9,8 @@ resources:
   - open-webui.namespace.yaml
   - open-webui-values.config-map.yaml
   - open-webui-values.secret.yaml
+  - playwright.service.yaml
+  - playwright.stateful-set.yaml
 
 configMapGenerator:
   - name: open-webui-pipelines
