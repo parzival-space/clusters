@@ -1,0 +1,8 @@
+namespace: tuwunel
+
+resources:
+  - tuwunel.config-map.yaml
+  - tuwunel.namespace.yaml
+  - tuwunel.helm-release.yaml
+  - tuwunel.helm-repository.yaml
+  - tuwunel.secret.yaml

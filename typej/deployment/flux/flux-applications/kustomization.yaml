@@ -4,3 +4,4 @@ resources:
   - authentik.kustomization.yaml
   - open-webui.kustomization.yaml
   - teamspeak6.kustomization.yaml
+  - tuwunel.kustomization.yaml
