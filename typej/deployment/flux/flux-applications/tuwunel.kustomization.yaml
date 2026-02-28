@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: teamspeak6
+  name: tuwunel
   namespace: flux-system
 spec:
   path: ./typej/deployment/applications/tuwunel
