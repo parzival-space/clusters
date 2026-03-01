@@ -4,6 +4,6 @@ metadata:
   name: tuwunel
   namespace: tuwunel
 spec:
-  interval: 1m0s
+  interval: 15m0s
   type: oci
-  url: oci://ghcr.io/magikid/modern-conduwuit-helm/conduwuit
+  url: oci://ghcr.io/magikid/modern-conduwuit-helm

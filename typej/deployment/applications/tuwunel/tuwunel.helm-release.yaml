@@ -6,7 +6,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: tuwunel
+      chart: conduwuit
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
