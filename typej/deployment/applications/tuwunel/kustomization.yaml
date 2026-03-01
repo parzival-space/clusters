@@ -6,3 +6,4 @@ resources:
   - tuwunel.helm-release.yaml
   - tuwunel.helm-repository.yaml
   - tuwunel.secret.yaml
+  - tuwunel.ingress-route-tcp.yaml
