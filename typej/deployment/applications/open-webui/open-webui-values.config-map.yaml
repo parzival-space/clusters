@@ -62,8 +62,7 @@ data:
   # feature: web search
   ENABLE_SEARCH_QUERY_GENERATION: "True"
   WEB_SEARCH_CONCURRENT_REQUESTS: "1"
-  WEB_SEARCH_ENGINE: "duckduckgo"
-  DDGS_BACKEND: "duckduckgo"
+  WEB_SEARCH_ENGINE: "brave"
 
   # feature: web loader
   WEB_LOADER_ENGINE: "playwright"
