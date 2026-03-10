@@ -63,5 +63,5 @@ spec:
             secretName: coturn
             items:
               - key: coturn.conf
-                path: /coturn.conf
+                path: coturn.conf
 
