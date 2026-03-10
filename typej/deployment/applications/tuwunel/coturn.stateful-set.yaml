@@ -17,7 +17,7 @@ spec:
         - name: coturn
           image: coturn/coturn:4.9.0-alpine
           restartPolicy: always
-          command:
+          args:
             - "-c"
             - "/config/coturn.conf"
           ports:
