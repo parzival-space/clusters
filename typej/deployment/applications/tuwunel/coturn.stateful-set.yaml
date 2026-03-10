@@ -55,8 +55,10 @@ spec:
               cpu: "1000m"
               memory: "1Gi"
           volumeMounts:
-            - mountPath: /config
+            - mountPath: /config/coturn.conf
+              readOnly: true
               name: config
+              subPath: coturn.conf
       volumes:
         - name: config
           secret:
