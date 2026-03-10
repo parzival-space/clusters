@@ -18,7 +18,8 @@ spec:
           image: coturn/coturn:4.9.0-alpine
           restartPolicy: always
           command:
-            - "-c /config/coturn.conf"
+            - "-c"
+            - "/config/coturn.conf"
           ports:
             - containerPort: 3478
               protocol: TCP
