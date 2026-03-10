@@ -31,7 +31,7 @@ spec:
               name: stun-tls
             - containerPort: 5349
               protocol: UDP
-              name: stun-tls
+              name: stun-udp
             - containerPort: 49160
               protocol: UDP
               name: transport-udp-0

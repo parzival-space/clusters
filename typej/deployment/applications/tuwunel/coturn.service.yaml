@@ -21,7 +21,7 @@ spec:
     - targetPort: 5349
       port: 5349
       protocol: UDP
-      name: stun-tls
+      name: stun-udp
     - targetPort: 49160
       port: 49160
       protocol: UDP
