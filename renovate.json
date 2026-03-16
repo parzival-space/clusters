@@ -1,3 +1,4 @@
 {
+    "$schema": "https://docs.renovatebot.com/renovate-global-schema.json",
     "extends": ["config:recommended"]
 }

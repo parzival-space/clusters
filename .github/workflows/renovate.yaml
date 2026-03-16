@@ -33,6 +33,9 @@ jobs:
         uses: renovatebot/github-action@v46.1.5
         with:
           token: '${{ steps.get_token.outputs.token }}'
+
         env:
           # enable commit signing
           RENOVATE_PLATFORM_COMMIT: 'true'
+          RENOVATE_AUTODISCOVER: 'true'
+          RENOVATE_AUTODISCOVER_FILTER: "/${{ github.repository_owner }}\/${{ steps.detect_repository_name.outputs.value }}/"
