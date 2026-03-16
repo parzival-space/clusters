@@ -16,5 +16,12 @@
             "/(?:^|/)gotk-components\\.ya?ml$/",
             "/\\w+\\/deployment\\/.*.yaml/"
         ]
-    }
+    },
+    "packageRules": [
+        {
+            "matchManagers": [ "kubernetes", "flux" ],
+            "matchPackageNames": [ "@ghcr.io/parzival-space/sxmf-minecraft/**" ],
+            "enabled": false
+        }
+    ]
 }
