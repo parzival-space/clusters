@@ -18,7 +18,7 @@ spec:
       serviceAccountName: mc-router
       containers:
         - name: mc-router
-          image: itzg/mc-router:1.32.3
+          image: itzg/mc-router:1.41.0
           imagePullPolicy: IfNotPresent
           args:
             - "--in-kube-cluster"
