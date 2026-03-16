@@ -19,8 +19,8 @@
     },
     "packageRules": [
         {
-            "matchManagers": [ "kubernetes", "flux" ],
-            "matchPackageNames": [ "@ghcr.io/parzival-space/sxmf-minecraft/**" ],
+            "matchManagers": ["kubernetes", "flux"],
+            "matchPackageNames": ["/ghcr\\.io\\/parzival-space\\/sxmf-minecraft\\/.*/"],
             "enabled": false
         }
     ]
