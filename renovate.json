@@ -1,6 +1,9 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-global-schema.json",
     "extends": ["config:recommended"],
+    "dependencyDashboard": true,
+    "branchConcurrentLimit": 10,
+    "prConcurrentLimit": 10,
     "nix": {
         "enabled": true
     },
@@ -13,7 +16,6 @@
     "flux": {
         "enabled": true,
         "managerFilePatterns": [
-            "/(?:^|/)gotk-components\\.ya?ml$/",
             "/\\w+\\/deployment\\/.*.yaml/"
         ]
     },
