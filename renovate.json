@@ -5,7 +5,11 @@
     "branchConcurrentLimit": 10,
     "prConcurrentLimit": 10,
     "nix": {
-        "enabled": true
+        "enabled": true,
+        "lockFileMaintenance": {
+            "enabled": true,
+            "schedule": [ "every weekend" ]
+        }
     },
     "kubernetes": {
         "enabled": true,
