@@ -1,0 +1,6 @@
+namespace: longhorn-system
+
+resources:
+  - longhorn.helm-release.yaml
+  - longhorn.helm-repository.yaml
+  - longhorn-system.namespace.yaml
