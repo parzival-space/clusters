@@ -1,5 +1,5 @@
 {
-    "$schema": "https://docs.renovatebot.com/renovate-global-schema.json",
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": ["config:recommended"],
     "dependencyDashboard": true,
     "branchConcurrentLimit": 10,
@@ -13,21 +13,35 @@
     },
     "kubernetes": {
         "enabled": true,
-        "managerFilePatterns": [
-            "/\\w+\\/deployment\\/.*.yaml/"
-        ]
+        "managerFilePatterns": [ "/\\w+\\/deployment\\/.*.yaml/" ]
     },
     "flux": {
         "enabled": true,
-        "managerFilePatterns": [
-            "/\\w+\\/deployment\\/.*.yaml/"
-        ]
+        "managerFilePatterns": [ "/\\w+\\/deployment\\/.*.yaml/" ]
     },
     "packageRules": [
         {
-            "matchManagers": ["kubernetes", "flux"],
-            "matchPackageNames": ["/ghcr\\.io\\/parzival-space\\/sxmf-minecraft\\/.*/"],
+            "matchManagers": [ "kubernetes", "flux" ],
+            "matchPackageNames": [ "/ghcr\\.io\\/parzival-space\\/sxmf-minecraft\\/.*/" ],
             "enabled": false
+        }
+    ],
+    "customManagers": [
+        {
+            "customType": "regex",
+            "managerFilePatterns": [ "/\\w+\\/talos\\/talconfig.yaml/" ],
+            "matchStrings": [ "kubernetesVersion: \"?v?(?<currentValue>[^\"\\s]+)\"?" ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "kubernetes/kubernetes",
+            "versioningTemplate": "semver"
+        },
+        {
+            "customType": "regex",
+            "managerFilePatterns": [ "/\\w+\\/talos\\/talconfig.yaml/" ],
+            "matchStrings": [ "talosVersion: \"?v?(?<currentValue>[^\"\\s]+)\"?" ],
+            "datasourceTemplate": "github-releases",
+            "depNameTemplate": "siderolabs/talos",
+            "versioningTemplate": "semver"
         }
     ]
 }
