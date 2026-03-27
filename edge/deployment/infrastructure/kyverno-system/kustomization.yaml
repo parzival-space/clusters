@@ -1,6 +1,0 @@
-namespace: kyverno-system
-
-resources:
-  - kyverno.helm-release.yaml
-  - kyverno.helm-repository.yaml
-  - kyverno-system.namespace.yaml
