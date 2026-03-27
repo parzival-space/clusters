@@ -13,6 +13,8 @@ nodes:
     controlPlane: true
     ipAddress: eu-central-1.edge.k8s.parzival.space
     installDisk: /dev/disk/by-path/pci-0000:00:10.0
+    certSANs:
+      - eu-central-1.edge.k8s.parzival.space
     machineSpec:
       mode: metal
       arch: amd64
@@ -32,9 +34,6 @@ nodes:
             gateway: 193.30.120.1
           - network: ::/0
             gateway: fe80::1
-
-    certSANs:
-      - eu-central-1.edge.k8s.parzival.space
     nameservers:
       - 1.1.1.1                 # Cloudflare DNS
       - 2606:4700:4700::1111    # Cloudflare DNS
@@ -46,4 +45,3 @@ nodes:
           sysctls:
             # router advertisements are broken in the vms network
             net.ipv6.conf.ens3.accept_ra: "0"
-
