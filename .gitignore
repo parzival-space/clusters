@@ -5,3 +5,8 @@
 
 # temporary sops files
 *_unencrypted
+
+# talos linux, talhelper files
+/*/talos/clusterconfig
+/*/talos/kubeconfig
+/*/talos/talosconfig

@@ -1,0 +1,49 @@
+clusterName: edge
+endpoint: https://edge.k8s.parzival.space:6443
+talosVersion: "v1.12.6"
+kubernetesVersion: "v1.35.0"
+allowSchedulingOnControlPlanes: true
+additionalApiServerCertSans:
+  - edge.k8s.parzival.space
+additionalMachineCertSans:
+  - edge.k8s.parzival.space
+
+nodes:
+  - hostname: eu-central-1
+    controlPlane: true
+    ipAddress: eu-central-1.edge.k8s.parzival.space
+    installDisk: /dev/disk/by-path/pci-0000:00:10.0
+    machineSpec:
+      mode: metal
+      arch: amd64
+      secureboot: true
+      useUKI: true
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - interface: ens3
+        dhcp: false
+        addresses:
+          - 193.30.120.10/22
+          - 2a03:4000:2a:702::10/64
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 193.30.120.1
+          - network: ::/0
+            gateway: fe80::1
+
+    certSANs:
+      - eu-central-1.edge.k8s.parzival.space
+    nameservers:
+      - 1.1.1.1                 # Cloudflare DNS
+      - 2606:4700:4700::1111    # Cloudflare DNS
+      - 86.54.11.100            # DNS4EU DNS
+      - 2a13:1001::86:54:11:100 # DNS4EU DNS
+    patches:
+      - |-
+        machine:
+          sysctls:
+            # router advertisements are broken in the vms network
+            net.ipv6.conf.ens3.accept_ra: "0"
+
