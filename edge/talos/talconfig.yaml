@@ -8,6 +8,36 @@ additionalApiServerCertSans:
 additionalMachineCertSans:
   - edge.k8s.parzival.space
 
+controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          # extensions required for longhorn
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+  patches:
+    - |-
+      machine:
+        # extra mount for longhorn
+        kubelet:
+          extraMounts:
+          - destination: /var/lib/longhorn
+            type: bind
+            source: /var/lib/longhorn
+            options:
+              - bind
+              - rshared
+              - rw
+        # increase the number of hugepages for longhorn
+        sysctls:
+          vm.nr_hugepages: "1024"
+        # enable the required kernel modules for longhorn
+        kernel:
+          modules:
+            - name: nvme_tcp
+            - name: vfio_pci
+
 nodes:
   - hostname: eu-central-1
     controlPlane: true
