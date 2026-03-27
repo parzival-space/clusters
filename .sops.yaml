@@ -3,16 +3,10 @@
 # Don't forget to back up private keys!
 # age private keys are expected on the host in /var/lib/sops-nix/age/keys.txt
 keys:
-  - &edge age1y59wyvraz4g4d4lmsz9r2rhs6kycunvg538ystukfjtm6jam9uvqx94s7k
   - &oracle age1tyjaypk0xxzs4p7lecvdsxnsh0223d2jdq5dny2prjkgyzwn74eq08uqat
   - &typej age1sl4vsymlq5h3vl343gyd9h6ne0za9wnrs3z50ehr9gkftfw77c5qa26554
 
 creation_rules:
-  - age: [*edge]
-    path_regex: 'edge/nix/secrets.yaml$'
-  - age: [*edge]
-    path_regex: 'edge/deployment/.*secret.yaml'
-    encrypted_regex: ^(data|stringData)$
   - age: [*oracle]
     path_regex: 'oracle/nix/secrets.yaml$'
   - age: [*oracle]
