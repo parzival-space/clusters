@@ -5,8 +5,14 @@
 keys:
   - &oracle age1tyjaypk0xxzs4p7lecvdsxnsh0223d2jdq5dny2prjkgyzwn74eq08uqat
   - &typej age1sl4vsymlq5h3vl343gyd9h6ne0za9wnrs3z50ehr9gkftfw77c5qa26554
+  - &edge age1jpvhzhyarcnr6vylq0cwpj86vnqzr5s5mw0kwcq2jzzwvm3as4cqjcrsxm
 
 creation_rules:
+  - age: [*edge]
+    path_regex: 'edge/talos/.*sops.yaml'
+  - age: [*edge]
+    path_regex: 'edge/deployment/.*secret.yaml'
+    encrypted_regex: ^(data|stringData)$
   - age: [*oracle]
     path_regex: 'oracle/nix/secrets.yaml$'
   - age: [*oracle]
