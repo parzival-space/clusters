@@ -1,2 +1,6 @@
 namespace: metallb-system
 
+resources:
+  - metallb.helm-release.yaml
+  - metallb.helm-repository.yaml
+  - metallb-system.namespace.yaml
