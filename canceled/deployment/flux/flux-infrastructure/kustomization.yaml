@@ -2,3 +2,4 @@ namespace: flux-system
 
 resources:
   - longhorn-system.kustomization.yaml
+  - traefik-system.kustomization.yaml
