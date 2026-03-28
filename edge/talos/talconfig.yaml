@@ -1,12 +1,12 @@
-clusterName: edge
-endpoint: https://edge.k8s.parzival.space:6443
+clusterName: canceled
+endpoint: https://canceled.k8s.parzival.space:6443
 talosVersion: "v1.12.6"
 kubernetesVersion: "v1.35.3"
 allowSchedulingOnControlPlanes: true
 additionalApiServerCertSans:
-  - edge.k8s.parzival.space
+  - canceled.k8s.parzival.space
 additionalMachineCertSans:
-  - edge.k8s.parzival.space
+  - canceled.k8s.parzival.space
 
 controlPlane:
   schematic:
@@ -41,10 +41,10 @@ controlPlane:
 nodes:
   - hostname: eu-central-1
     controlPlane: true
-    ipAddress: eu-central-1.edge.k8s.parzival.space
+    ipAddress: eu-central-1.canceled.k8s.parzival.space
     installDisk: /dev/disk/by-path/pci-0000:00:10.0
     certSANs:
-      - eu-central-1.edge.k8s.parzival.space
+      - eu-central-1.canceled.k8s.parzival.space
     machineSpec:
       mode: metal
       arch: amd64
