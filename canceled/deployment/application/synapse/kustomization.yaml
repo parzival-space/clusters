@@ -1,0 +1,7 @@
+namespace: synapse
+
+resources:
+  - postgres.helm-release.yaml
+  - postgres.helm-repository.yaml
+  - postgres-credentials.secret.yaml
+  - synapse.namespace.yaml
