@@ -22,7 +22,6 @@ spec:
             userPasswordKey: "user-password"
             replicationPasswordKey: "replication-password"
     auth:
-      database: synapse
       username: synapse
     primary:
       # Resource allocation
@@ -46,5 +45,6 @@ spec:
       initdb:
         scripts:
           synapse_account.sql: |
-            CREATE DATABASE synapse_account WITH OWNER synapse;
+            CREATE DATABASE synapse WITH OWNER synapse ENCODING 'UTF8' LOCALE 'C' TEMPLATE template0;
+            CREATE DATABASE synapse_account WITH OWNER synapse ENCODING 'UTF8' LOCALE 'C' TEMPLATE template0;
 
