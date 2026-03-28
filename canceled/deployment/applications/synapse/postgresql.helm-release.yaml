@@ -42,3 +42,9 @@ spec:
         # Access mode
         accessModes:
           - ReadWriteOnce
+
+      initdb:
+        scripts:
+          synapse_account.sql: |
+            CREATE DATABASE synapse_account WITH OWNER synapse;
+

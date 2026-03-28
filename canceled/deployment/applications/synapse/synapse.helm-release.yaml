@@ -1,0 +1,76 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: synapse
+spec:
+  chart:
+    spec:
+      chart: matrix-stack
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: synapse
+      version: "18.5.14"
+  interval: 24h0m0s
+  values:
+    serverName: canceled.cc
+    elementAdmin:
+      ingress:
+        host: admin.canceled.cc
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    elementWeb:
+      enabled: false # might be used in the future
+      ingress:
+        host: chat.canceled.cc
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+    matrixRTC:
+      ingress:
+        host: mrtc.canceled.cc
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+
+    matrixAuthenticationService:
+      ingress:
+        host: account.canceled.cc
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+      postgres:
+        host: postgresql.synapse.svc.cluster.local
+        port: 5432
+        user: synapse
+        password:
+          secret: "postgresql-credentials"
+          secretKey: "user-password"
+        database: synapse_account
+        sslMode: prefer
+
+    synapse:
+      ingress:
+        host: matrix.canceled.cc
+        annotations:
+          traefik.ingress.kubernetes.io/router.entrypoints: websecure
+          traefik.ingress.kubernetes.io/router.tls: "true"
+          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+      postgres:
+        host: postgresql.synapse.svc.cluster.local
+        port: 5432
+        user: synapse
+        password:
+          secret: "postgresql-credentials"
+          secretKey: "user-password"
+        database: synapse
+        sslMode: prefer
+
+    # disable build-in postgresql
+    postgres:
+      enabled: false
