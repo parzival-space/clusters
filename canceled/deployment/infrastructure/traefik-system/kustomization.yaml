@@ -1,0 +1,6 @@
+namespace: traefik-system
+
+resources:
+  - traefik.helm-release.yaml
+  - traefik.helm-repository.yaml
+  - traefik-system.namespace.yaml
