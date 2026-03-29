@@ -24,20 +24,16 @@ spec:
 
     elementAdmin:
       ingress:
-        host: admin.canceled.cc
+        host: admin.matrix.canceled.cc
     elementWeb:
       ingress:
-        host: chat.canceled.cc
+        host: chat.matrix.canceled.cc
     matrixRTC:
       ingress:
-        host: mrtc.canceled.cc
-    wellKnownDelegation:
-      baseDomainRedirect:
-        enabled: false
-
+        host: mrtc.matrix.canceled.cc
     matrixAuthenticationService:
       ingress:
-        host: account.canceled.cc
+        host: account.matrix.canceled.cc
       postgres:
         host: postgresql.synapse.svc.cluster.local
         port: 5432
@@ -47,7 +43,9 @@ spec:
           secretKey: "user-password"
         database: synapse_account
         sslMode: prefer
-
+    wellKnownDelegation:
+      baseDomainRedirect:
+        enabled: false
     synapse:
       ingress:
         host: matrix.canceled.cc
