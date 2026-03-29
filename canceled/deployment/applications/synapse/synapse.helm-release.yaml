@@ -14,44 +14,32 @@ spec:
   interval: 24h0m0s
   values:
     serverName: canceled.cc
+
+    # added to all
+    ingress:
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+
     elementAdmin:
       ingress:
         host: admin.canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
     elementWeb:
       ingress:
         host: chat.canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
     matrixRTC:
       ingress:
         host: mrtc.canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
     wellKnownDelegation:
       baseDomainRedirect:
         enabled: false
       ingress:
         host: canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
 
     matrixAuthenticationService:
       ingress:
         host: account.canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
       postgres:
         host: postgresql.synapse.svc.cluster.local
         port: 5432
@@ -65,10 +53,6 @@ spec:
     synapse:
       ingress:
         host: matrix.canceled.cc
-        annotations:
-          traefik.ingress.kubernetes.io/router.entrypoints: websecure
-          traefik.ingress.kubernetes.io/router.tls: "true"
-          traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
       postgres:
         host: postgresql.synapse.svc.cluster.local
         port: 5432
