@@ -1,7 +1,7 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: synapse
+  name: synapmatrix-stackse
 spec:
   chart:
     spec:
@@ -9,7 +9,7 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: synapse
+        name: matrix-stack
       version: "26.3.1"
   interval: 24h0m0s
   values:
@@ -22,15 +22,18 @@ spec:
         traefik.ingress.kubernetes.io/router.tls: "true"
         traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
 
-    elementAdmin:
-      ingress:
-        host: admin.matrix.canceled.cc
-    elementWeb:
-      ingress:
-        host: chat.canceled.cc
     matrixRTC:
       ingress:
         host: mrtc.matrix.canceled.cc
+
+    elementAdmin:
+      ingress:
+        host: admin.matrix.canceled.cc
+
+    elementWeb:
+      ingress:
+        host: chat.canceled.cc
+
     matrixAuthenticationService:
       ingress:
         host: account.matrix.canceled.cc
@@ -43,9 +46,11 @@ spec:
           secretKey: "user-password"
         database: synapse_account
         sslMode: prefer
+
     wellKnownDelegation:
       baseDomainRedirect:
         enabled: false
+
     synapse:
       ingress:
         host: matrix.canceled.cc

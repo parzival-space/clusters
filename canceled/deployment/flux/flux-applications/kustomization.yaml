@@ -2,4 +2,4 @@ namespace: flux-system
 
 resources:
   - playground.kustomizaton.yaml
-  - synapse.kustomization.yaml
+  - matrix-stack.kustomization.yaml
