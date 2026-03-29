@@ -22,7 +22,6 @@ spec:
           traefik.ingress.kubernetes.io/router.tls: "true"
           traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
     elementWeb:
-      enabled: false # might be used in the future
       ingress:
         host: chat.canceled.cc
         annotations:
