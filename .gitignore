@@ -10,3 +10,6 @@
 /*/talos/clusterconfig
 /*/talos/kubeconfig
 /*/talos/talosconfig
+
+# test directory
+.local
