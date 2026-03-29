@@ -1,4 +1,5 @@
 namespace: flux-system
 
 resources:
+  - playground.kustomizaton.yaml
   - synapse.kustomization.yaml
