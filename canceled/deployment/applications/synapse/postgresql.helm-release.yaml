@@ -9,7 +9,8 @@ spec:
       reconcileStrategy: ChartVersion
       sourceRef:
         kind: HelmRepository
-        name: postgresql
+        name: bitnamicharts
+        namespace: helm-repositories
       version: "18.5.14"
   interval: 24h0m0s
   values:
