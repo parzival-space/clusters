@@ -38,13 +38,13 @@ spec:
       ingress:
         host: account.matrix.canceled.cc
       postgres:
-        host: postgresql.synapse.svc.cluster.local
+        host: matrix-stack-rw.matrix-stack.svc.cluster.local
         port: 5432
-        user: synapse
+        user: matrix-stack
         password:
-          secret: "postgresql-credentials"
-          secretKey: "user-password"
-        database: synapse_account
+          secret: matrix-stack-app
+          secretKey: password
+        database: matrix_authentication_service
         sslMode: prefer
 
     wellKnownDelegation:
@@ -55,13 +55,13 @@ spec:
       ingress:
         host: matrix.canceled.cc
       postgres:
-        host: postgresql.synapse.svc.cluster.local
+        host: matrix-stack-rw.matrix-stack.svc.cluster.local
         port: 5432
-        user: synapse
+        user: matrix-stack
         password:
-          secret: "postgresql-credentials"
-          secretKey: "user-password"
-        database: synapse
+          secret: matrix-stack-app
+          secretKey: password
+        database: matrix_synapse
         sslMode: prefer
 
     # disable build-in postgresql
