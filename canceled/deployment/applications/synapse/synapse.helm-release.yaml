@@ -34,8 +34,6 @@ spec:
     wellKnownDelegation:
       baseDomainRedirect:
         enabled: false
-      ingress:
-        host: canceled.cc
 
     matrixAuthenticationService:
       ingress:
