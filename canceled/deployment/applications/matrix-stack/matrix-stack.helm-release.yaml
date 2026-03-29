@@ -45,7 +45,6 @@ spec:
           secret: matrix-stack-app
           secretKey: password
         database: matrix_authentication_service
-        sslMode: prefer
 
     wellKnownDelegation:
       baseDomainRedirect:
@@ -62,7 +61,6 @@ spec:
           secret: matrix-stack-app
           secretKey: password
         database: matrix_synapse
-        sslMode: prefer
 
     # disable build-in postgresql
     postgres:
