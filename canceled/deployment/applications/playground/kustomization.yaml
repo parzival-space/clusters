@@ -1,4 +1,5 @@
 namespace: playground
 
 resources:
+  - demo-cluster.cluster.yaml
   - playground.namespace.yaml
