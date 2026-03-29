@@ -27,7 +27,7 @@ spec:
         host: admin.matrix.canceled.cc
     elementWeb:
       ingress:
-        host: chat.matrix.canceled.cc
+        host: chat.canceled.cc
     matrixRTC:
       ingress:
         host: mrtc.matrix.canceled.cc
