@@ -1,6 +1,7 @@
 namespace: flux-system
 
 resources:
+  - cnpg-system.kusomization.yaml
   - longhorn-system.kustomization.yaml
   - metallb-system.kustomization.yaml
   - traefik-system.kustomization.yaml

@@ -1,0 +1,6 @@
+namespace: cnpg-system
+
+resources:
+  - cnpg.helm-release.yaml
+  - cnpg.helm-repository.yaml
+  - cnpg-system.namespace.yaml
