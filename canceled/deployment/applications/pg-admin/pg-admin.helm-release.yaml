@@ -12,12 +12,10 @@ spec:
         name: runix
       version: "1.62.0"
   interval: 24h0m0s
-  valuesFrom:
-    - kind: Secret
-      name: pg-admin
-      valuesKey: values.yaml
   values:
     ingress:
       enabled: false # we don't want to expose pg-admin to the internet
     persistentVolume:
       size: 2Gi
+    # env.email: chart@domain.com
+    # env.password: SuperSecret

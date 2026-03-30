@@ -3,5 +3,4 @@ namespace: pg-admin
 resources:
   - pg-admin.helm-release.yaml
   - pg-admin.namespace.yaml
-  - pg-admin.secret.yaml
   - runix.helm-repository.yaml
