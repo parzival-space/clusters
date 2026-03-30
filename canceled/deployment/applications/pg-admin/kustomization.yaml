@@ -1,0 +1,8 @@
+namespace: pg-admin
+
+resources:
+  - pg-admin.config-map.yaml
+  - pg-admin.namespace.yaml
+  - pg-admin.secret.yaml
+  - pg-admin.service.yaml
+  - pg-admin.stateful-set.yaml
