@@ -16,7 +16,7 @@ spec:
       containers:
         - name: pg-admin
           image: dpage/pgadmin4:9.13.0
-          restartPolicy: always
+          restartPolicy: Always
           ports:
             - containerPort: 80
               protocol: TCP
