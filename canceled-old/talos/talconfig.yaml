@@ -8,6 +8,14 @@ additionalApiServerCertSans:
 additionalMachineCertSans:
   - canceled.k8s.parzival.space
 
+clusterPodNets:
+  - 10.244.0.0/16
+  - fd00:244::/56
+
+clusterSvcNets:
+  - 10.96.0.0/12
+  - fd00:96::/112
+
 controlPlane:
   schematic:
     customization:
