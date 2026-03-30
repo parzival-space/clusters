@@ -6,3 +6,5 @@ data:
   # If left unset, a Postfix server will be started to deliver password reset emails.
   PGADMIN_DISABLE_POSTFIX: "true"
 
+  PGADMIN_LISTEN_ADDRESS: "0.0.0.0"
+  PGADMIN_LISTEN_PORT: "80"
