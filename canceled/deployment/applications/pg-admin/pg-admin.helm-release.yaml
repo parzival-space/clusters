@@ -19,3 +19,5 @@ spec:
   values:
     ingress:
       enabled: false # we don't want to expose pg-admin to the internet
+    persistentVolume:
+      size: 2Gi
