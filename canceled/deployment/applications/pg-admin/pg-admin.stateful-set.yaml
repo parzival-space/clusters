@@ -18,7 +18,7 @@ spec:
           image: dpage/pgadmin4:9.13.0
           restartPolicy: Always
           ports:
-            - containerPort: 80
+            - containerPort: 5050
               protocol: TCP
               name: web
           resources:
