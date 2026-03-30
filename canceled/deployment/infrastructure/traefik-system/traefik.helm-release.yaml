@@ -28,6 +28,10 @@ spec:
       fsGroup: 65532
       fsGroupChangePolicy: "OnRootMismatch"
 
+    service:
+      spec:
+        ipFamilyPolicy: RequireDualStack
+
     # configure certificate resolvers for cloudflare
     certificatesResolvers:
       letsencrypt:
