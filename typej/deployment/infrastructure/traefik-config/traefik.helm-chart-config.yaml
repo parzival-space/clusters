@@ -16,6 +16,13 @@ spec:
 
     # extra ports
     ports:
+      # The Lord of the Rings Moria game server UDP port
+      moria:
+        port: 7777
+        exposedPort: 7777
+        protocol: UDP
+        expose:
+          default: true
       teamspeak6-voice:
         port: 9987
         expose:
