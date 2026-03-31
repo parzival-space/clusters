@@ -1,7 +1,7 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: games
+  name: moria
   namespace: flux-system
 spec:
   path: ./typej/deployment/applications/moria
