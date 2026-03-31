@@ -17,4 +17,3 @@ spec:
       name: sops-age
   dependsOn:
     - name: longhorn-system
-    - name: traefik-system
