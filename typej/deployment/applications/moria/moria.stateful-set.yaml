@@ -24,7 +24,7 @@ spec:
           command: ["sh", "-c", "rm -f /server-data/MoriaServerConfig.ini && cp /server-init/MoriaServerConfig.ini /server-data/"]
       containers:
         - name: moria
-          image: andrewsav/moria:1.2.0
+          image: andrewsav/moria:1.4.1
           ports:
             - name: game
               containerPort: 7777
