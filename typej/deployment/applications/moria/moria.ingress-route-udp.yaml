@@ -1,0 +1,11 @@
+apiVersion: traefik.io/v1alpha1
+kind: IngressRouteUDP
+metadata:
+  name: moria
+spec:
+  entryPoints:
+    - moria
+  routes:
+    - services:
+        - name: moria
+          port: 7777

@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: moria
+spec:
+  serviceName: moria
+  replicas: 1
+  selector:
+    matchLabels:
+      app: moria
+  template:
+    metadata:
+      labels:
+        app: moria
+    spec:
+      initContainers:
+        - name: moria-init
+          volumeMounts:
+            - mountPath: /server-data
+              name: data
+            - mountPath: /server-init
+              name: moria-config
+          image: busybox:1.37.0
+          command: ["sh", "-c", "rm -f /server-data/MoriaServerConfig.ini && cp /server-init/MoriaServerConfig.ini /server-data/"]
+      containers:
+        - name: moria
+          image: andrewsav/moria:1.2.0
+          ports:
+            - name: game
+              containerPort: 7777
+              protocol: UDP
+          volumeMounts:
+            - mountPath: /server
+              name: data
+          resources:
+            requests:
+              cpu: 4
+              memory: 6144Mi
+            limits:
+              cpu: 4
+              memory: 8192Mi
+      volumes:
+        - name: moria-config
+          configMap:
+            name: moria
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 16Gi
+        storageClassName: longhorn

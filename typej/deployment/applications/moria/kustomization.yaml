@@ -1,0 +1,12 @@
+namespace: moria
+
+configMapGenerator:
+  - name: moria
+    files:
+      - ./config/MoriaServerConfig.ini
+
+resources:
+  - ./moria.ingress-route-udp.yaml
+  - ./moria.namespace.yaml
+  - ./moria.service.yaml
+  - ./moria.stateful-set.yaml
