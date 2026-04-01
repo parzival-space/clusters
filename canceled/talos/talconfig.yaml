@@ -34,6 +34,7 @@ controlPlane:
         officialExtensions:
           - siderolabs/amd-ucode
           - siderolabs/intel-ucode
+          - siderolabs/qemu-guest-agent
           # extensions required for longhorn
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
@@ -49,6 +50,7 @@ worker:
         officialExtensions:
           - siderolabs/amd-ucode
           - siderolabs/intel-ucode
+          - siderolabs/qemu-guest-agent
           # extensions required for longhorn
           - siderolabs/iscsi-tools
           - siderolabs/util-linux-tools
@@ -84,8 +86,3 @@ nodes:
             gateway: 193.30.120.1
           - network: ::/0
             gateway: fe80::1
-    schematic:
-      customization:
-        systemExtensions:
-          officialExtensions:
-            - siderolabs/qemu-guest-agent
