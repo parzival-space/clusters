@@ -4,4 +4,4 @@ resources:
   - matrix-stack.cluster.yaml
 #  - matrix-stack.helm-release.yaml
 #  - matrix-stack.helm-repository.yaml
-#  - matrix-stack.namespace.yaml
+  - matrix-stack.namespace.yaml
