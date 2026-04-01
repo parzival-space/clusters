@@ -1,0 +1,9 @@
+machine:
+  network:
+    nameservers:
+      # Cloudflare DNS
+      - 1.1.1.1
+      - 2606:4700:4700::1111
+      # DNS4EU DNS
+      - 86.54.11.100
+      - 2a13:1001::86:54:11:100

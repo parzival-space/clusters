@@ -1,0 +1,91 @@
+clusterName: canceled
+endpoint: https://canceled.k8s.parzival.space:6443
+
+talosVersion: v1.12.6
+kubernetesVersion: v1.35.3
+allowSchedulingOnControlPlanes: true
+
+# cluster networks
+clusterPodNets:
+  - fd00:10:244::/56
+  - 10.244.0.0/16
+clusterSvcNets:
+  - fd00:10:96::/112
+  - 10.96.0.0/12
+
+# sans shared across nodes
+additionalApiServerCertSans:
+  - canceled.k8s.parzival.space
+additionalMachineCertSans:
+  - canceled.k8s.parzival.space
+# wireguard network
+# ipv6: fd00:10:200::/64
+# ipv4: 10.200.0.0/24
+
+# configuration shared across nodes
+controlPlane:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/nameservers.yaml
+    - ./patches/timeservers.yaml
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/amd-ucode
+          - siderolabs/intel-ucode
+          # extensions required for longhorn
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+
+worker:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/nameservers.yaml
+    - ./patches/timeservers.yaml
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/amd-ucode
+          - siderolabs/intel-ucode
+          # extensions required for longhorn
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
+
+# cluster nodes
+nodes:
+  - hostname: eu-central-1
+    controlPlane: true
+    ipAddress: eu-central-1.canceled.k8s.parzival.space
+    installDisk: /dev/disk/by-path/pci-0000:00:10.0
+    certSANs:
+      - eu-central-1.canceled.k8s.parzival.space
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 96:3d:6a:dd:09:bf
+        dhcp: false
+        addresses:
+          - 2a03:4000:2a:702::10/64
+          - 193.30.120.10/22
+        routes:
+          - network: 0.0.0.0/0
+            gateway: 193.30.120.1
+          - network: ::/0
+            gateway: fe80::1
+      - interface: wg0
+        addresses:
+          - fd00:10:200::1/64
+          - 10.200.0.0/24
+        wireguard:
+          privateKey: ${eu_central_1__wg0__private}
+          listenPort: 51820
+          peers: []
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/qemu-guest-agent

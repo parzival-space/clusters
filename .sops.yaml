@@ -9,7 +9,7 @@ keys:
 
 creation_rules:
   - age: [*canceled]
-    path_regex: 'canceled/talos/.*sops.yaml'
+    path_regex: '^(canceled/talos/talsecret.yaml|canceled/talos/talenv.yaml)$'
   - age: [*canceled]
     path_regex: 'canceled/deployment/.*secret.yaml'
     encrypted_regex: ^(data|stringData)$
