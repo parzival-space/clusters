@@ -4,4 +4,3 @@ resources:
   - metallb.helm-release.yaml
   - metallb.helm-repository.yaml
   - metallb-system.namespace.yaml
-  - default-pool.ip-address-pool.yaml
