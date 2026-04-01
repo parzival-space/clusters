@@ -2,6 +2,8 @@ apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
 metadata:
   name: default-pool
+  annotations:
+    kustomize.toolkit.fluxcd.io/depends-on: metallb-system/metallb
 spec:
   addresses:
     - 193.30.120.10/32
