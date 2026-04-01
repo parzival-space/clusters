@@ -1,4 +1,5 @@
 namespace: flux-system
 
 resources:
+  - longhorn-system.kustomization.yaml
   - metallb-system.kustomization.yaml
