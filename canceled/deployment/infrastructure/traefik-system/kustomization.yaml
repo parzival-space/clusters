@@ -1,0 +1,7 @@
+namespace: traefik-system
+
+resources:
+  - traefik.helm-release.yaml
+  - traefik.helm-repository.yaml
+  - traefik-auth-cloudflare.secret.yaml
+  - traefik-system.namespace.yaml

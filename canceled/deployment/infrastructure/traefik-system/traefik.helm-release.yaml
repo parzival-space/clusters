@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: traefik
+spec:
+  chart:
+    spec:
+      chart: traefik
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: traefik
+      version: "39.0.6"
+  interval: 24h0m0s
+  values:
+    persistence:
+      enabled: true
+      storageClass: longhorn
+
+    # required to fix issues with the ReadWriteOnce volume
+    updateStrategy:
+      type: Recreate
+    # fix storage mount permissions
+    podSecurityContext:
+      runAsGroup: 65532
+      runAsNonRoot: true
+      runAsUser: 65532
+      fsGroup: 65532
+      fsGroupChangePolicy: "OnRootMismatch"
+
+    service:
+      spec:
+        ipFamilyPolicy: RequireDualStack
+
+    # configure certificate resolvers for cloudflare
+    certificatesResolvers:
+      letsencrypt:
+        acme:
+          storage: /data/acme.json
+          dnsChallenge:
+            provider: cloudflare
+    env:
+      - name: CF_DNS_API_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: traefik-auth-cloudflare
+            key: token
+
