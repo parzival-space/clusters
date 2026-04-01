@@ -65,6 +65,14 @@ nodes:
       topology.kubernetes.io/region: eu
       topology.kubernetes.io/zone: central
     networkInterfaces:
+      - interface: wg0
+        addresses:
+          - fd00:10:200::1/64
+          - 10.200.0.0/24
+        wireguard:
+          privateKey: ${eu_central_1__wg0__private}
+          listenPort: 51820
+          peers: []
       - deviceSelector:
           hardwareAddr: 96:3d:6a:dd:09:bf
         dhcp: false
@@ -76,14 +84,6 @@ nodes:
             gateway: 193.30.120.1
           - network: ::/0
             gateway: fe80::1
-      - interface: wg0
-        addresses:
-          - fd00:10:200::1/64
-          - 10.200.0.0/24
-        wireguard:
-          privateKey: ${eu_central_1__wg0__private}
-          listenPort: 51820
-          peers: []
     schematic:
       customization:
         systemExtensions:
