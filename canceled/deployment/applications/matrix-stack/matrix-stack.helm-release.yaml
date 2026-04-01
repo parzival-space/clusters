@@ -1,0 +1,78 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: matrix-stack
+spec:
+  chart:
+    spec:
+      chart: matrix-stack
+      reconcileStrategy: ChartVersion
+      sourceRef:
+        kind: HelmRepository
+        name: matrix-stack
+      version: "26.3.1"
+  interval: 24h0m0s
+  values:
+    serverName: canceled.cc
+
+    networking:
+      ## Whether components should attempt to bind IPv4 (ipv4) /IPv6 (ipv6) / both (dual-stack)
+      ipFamily: dual-stack
+
+    # added to all
+    ingress:
+      annotations:
+        traefik.ingress.kubernetes.io/router.entrypoints: websecure
+        traefik.ingress.kubernetes.io/router.tls: "true"
+        traefik.ingress.kubernetes.io/router.tls.certresolver: letsencrypt
+
+    matrixRTC:
+      ingress:
+        host: mrtc.matrix.canceled.cc
+
+    elementAdmin:
+      ingress:
+        host: admin.matrix.canceled.cc
+
+    elementWeb:
+      ingress:
+        host: chat.canceled.cc
+
+    matrixAuthenticationService:
+      ingress:
+        host: account.matrix.canceled.cc
+      postgres:
+        host: matrix-stack-rw.matrix-stack.svc.cluster.local
+        port: 5432
+        user: matrix_stack
+        password:
+          secret: matrix-stack-app
+          secretKey: password
+        database: matrix_authentication_service
+
+    wellKnownDelegation:
+      baseDomainRedirect:
+        enabled: false
+
+    synapse:
+      ingress:
+        host: matrix.canceled.cc
+      postgres:
+        host: matrix-stack-rw.matrix-stack.svc.cluster.local
+        port: 5432
+        user: matrix_stack
+        password:
+          secret: matrix-stack-app
+          secretKey: password
+        database: matrix_synapse
+      additional:
+        2026-03-30_old-public-key:
+          config: |
+            old_signing_key:
+              ed25519:1:
+                key: "vu0prRUkTeGhrCU44rJmSxcqQaAjfsgO0aO3pCInxUk"
+                expired_ts: 1774863284 # Mon Mar 30 2026 09:34:44 GMT+0000
+
+    # disable build-in postgresql
+    postgres:
+      enabled: false
