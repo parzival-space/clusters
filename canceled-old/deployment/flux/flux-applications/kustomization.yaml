@@ -1,6 +1,0 @@
-namespace: flux-system
-
-resources:
-  - matrix-stack.kustomization.yaml
-  - pg-admin.kustomizaton.yaml
-  - playground.kustomizaton.yaml

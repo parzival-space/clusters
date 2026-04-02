@@ -1,6 +1,0 @@
-namespace: pg-admin
-
-resources:
-  - pg-admin.helm-release.yaml
-  - pg-admin.namespace.yaml
-  - runix.helm-repository.yaml

@@ -1,4 +1,0 @@
-namespace: helm-repositories
-
-resources:
-  - bitnamicharts.helm-repository.yaml

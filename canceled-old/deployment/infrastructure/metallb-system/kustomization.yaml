@@ -1,7 +1,0 @@
-namespace: metallb-system
-
-resources:
-  - default-pool.ip-address-pool.yaml
-  - metallb.helm-release.yaml
-  - metallb.helm-repository.yaml
-  - metallb-system.namespace.yaml
