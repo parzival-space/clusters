@@ -12,7 +12,7 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: open-webui
-      version: 13.0.0
+      version: 13.0.1
   valuesFrom:
     - kind: ConfigMap
       name: open-webui-values
