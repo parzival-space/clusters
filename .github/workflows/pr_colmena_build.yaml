@@ -58,7 +58,7 @@ jobs:
           fi
 
       - name: Publish Report
-        uses: actions/github-script@v8
+        uses: actions/github-script@v9
         env:
           RESULT: "${{ steps.build.outputs.success == '1' && 'success' || 'failure' }}"
           TITLE: "Results for Colmena Build - ${{ matrix.cluster }} Cluster"
