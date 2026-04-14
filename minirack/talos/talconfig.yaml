@@ -19,20 +19,32 @@ clusterSvcNets:
   - 10.140.0.0/12
 
 controlPlane:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/timeservers.yaml
   schematic:
     customization:
       systemExtensions:
         officialExtensions:
           - siderolabs/amd-ucode
           - siderolabs/intel-ucode
+          # extensions required for longhorn
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
 
 worker:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/timeservers.yaml
   schematic:
     customization:
       systemExtensions:
         officialExtensions:
           - siderolabs/amd-ucode
           - siderolabs/intel-ucode
+          # extensions required for longhorn
+          - siderolabs/iscsi-tools
+          - siderolabs/util-linux-tools
 
 # cluster nodes
 nodes:
