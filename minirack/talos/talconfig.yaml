@@ -1,0 +1,51 @@
+clusterName: minirack
+endpoint: https://minirack.k8s.parival.dmz:6443
+
+talosVersion: v1.12.6
+kubernetesVersion: v1.35.3
+allowSchedulingOnControlPlanes: true
+
+additionalApiServerCertSans:
+  - minirack.k8s.parival.dmz
+additionalMachineCertSans:
+  - minirack.k8s.parival.dmz
+
+# cluster networks
+clusterPodNets:
+  - fd00:42:100::/56
+  - 10.160.0.0/16
+clusterSvcNets:
+  - fd00:42:200::/112
+  - 10.140.0.0/12
+
+controlPlane:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/amd-ucode
+          - siderolabs/intel-ucode
+
+worker:
+  schematic:
+    customization:
+      systemExtensions:
+        officialExtensions:
+          - siderolabs/amd-ucode
+          - siderolabs/intel-ucode
+
+# cluster nodes
+nodes:
+  - hostname: neo50q-master1
+    controlPlane: true
+    ipAddress: neo50q-master1.minirack.k8s.parival.dmz
+    installDisk: /dev/disk/by-id/nvme-SAMSUNG_MZAL8512HDLU-00BL2_S77MNF0X596035
+    certSANs:
+      - neo50q-master1.minirack.k8s.parival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 18:3d:2d:57:63:96
+        dhcp: true
