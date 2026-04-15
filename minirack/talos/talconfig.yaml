@@ -1,14 +1,14 @@
 clusterName: minirack
-endpoint: https://minirack.k8s.parival.dmz:6443
+endpoint: https://minirack.k8s.parzival.dmz:6443
 
 talosVersion: v1.12.6
 kubernetesVersion: v1.35.3
 allowSchedulingOnControlPlanes: true
 
 additionalApiServerCertSans:
-  - minirack.k8s.parival.dmz
+  - minirack.k8s.parzival.dmz
 additionalMachineCertSans:
-  - minirack.k8s.parival.dmz
+  - minirack.k8s.parzival.dmz
 
 # cluster networks
 clusterPodNets:
@@ -50,10 +50,10 @@ worker:
 nodes:
   - hostname: neo50q-master1
     controlPlane: true
-    ipAddress: neo50q-master1.minirack.k8s.parival.dmz
+    ipAddress: neo50q-master1.minirack.k8s.parzival.dmz
     installDisk: /dev/disk/by-id/nvme-SAMSUNG_MZAL8512HDLU-00BL2_S77MNF0X596035
     certSANs:
-      - neo50q-master1.minirack.k8s.parival.dmz
+      - neo50q-master1.minirack.k8s.parzival.dmz
     nodeLabels:
       topology.kubernetes.io/region: eu
       topology.kubernetes.io/zone: central
