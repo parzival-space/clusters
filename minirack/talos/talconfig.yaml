@@ -57,6 +57,10 @@ nodes:
     nodeLabels:
       topology.kubernetes.io/region: eu
       topology.kubernetes.io/zone: central
+    machineSpec:
+      secureboot: true
+      useUKI: true
+      mode: metal
     networkInterfaces:
       - deviceSelector:
           hardwareAddr: 18:3d:2d:57:63:96
