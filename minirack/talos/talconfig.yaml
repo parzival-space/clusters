@@ -12,10 +12,10 @@ additionalMachineCertSans:
 
 # cluster networks
 clusterPodNets:
-  - fd00:42:100::/56
+#  - fd00:42:100::/56 # disabled until Ubiquity fixes their IPv6 implementation
   - 10.160.0.0/16
 clusterSvcNets:
-  - fd00:42:200::/112
+#  - fd00:42:200::/112 # disabled until Ubiquity fixes their IPv6 implementation
   - 10.140.0.0/12
 
 controlPlane:
@@ -61,3 +61,6 @@ nodes:
       - deviceSelector:
           hardwareAddr: 18:3d:2d:57:63:96
         dhcp: true
+        dhcpOptions:
+          ipv4: true
+          ipv6: true
