@@ -6,12 +6,18 @@ keys:
   - &oracle age1tyjaypk0xxzs4p7lecvdsxnsh0223d2jdq5dny2prjkgyzwn74eq08uqat
   - &typej age1sl4vsymlq5h3vl343gyd9h6ne0za9wnrs3z50ehr9gkftfw77c5qa26554
   - &canceled age1jpvhzhyarcnr6vylq0cwpj86vnqzr5s5mw0kwcq2jzzwvm3as4cqjcrsxm
+  - &minirack age1hwvgq3fph8f3yuw0j0nyfltlzau5tcd97y37l75vr9c8u9j3luqqfp4kk4
 
 creation_rules:
   - age: [*canceled]
     path_regex: '^(canceled/talos/talsecret.yaml|canceled/talos/talenv.yaml)$'
   - age: [*canceled]
     path_regex: 'canceled/deployment/.*secret.yaml'
+    encrypted_regex: ^(data|stringData)$
+  - age: [*minirack]
+    path_regex: '^(minirack/talos/talsecret.yaml|minirack/talos/talenv.yaml)$'
+  - age: [*minirack]
+    path_regex: 'minirack/deployment/.*secret.yaml'
     encrypted_regex: ^(data|stringData)$
   - age: [*oracle]
     path_regex: 'oracle/nix/secrets.yaml$'

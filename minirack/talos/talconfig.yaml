@@ -1,0 +1,153 @@
+clusterName: minirack
+endpoint: https://minirack.k8s.parzival.dmz:6443
+
+talosVersion: v1.12.6
+kubernetesVersion: v1.35.3
+allowSchedulingOnControlPlanes: true
+
+additionalApiServerCertSans:
+  - minirack.k8s.parzival.dmz
+additionalMachineCertSans:
+  - minirack.k8s.parzival.dmz
+
+# cluster networks
+clusterPodNets:
+#  - fd00:42:100::/56 # disabled until Ubiquity fixes their IPv6 implementation
+  - 10.160.0.0/16
+clusterSvcNets:
+#  - fd00:42:200::/112 # disabled until Ubiquity fixes their IPv6 implementation
+  - 10.140.0.0/12
+
+controlPlane:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/timeservers.yaml
+
+worker:
+  patches:
+    - ./patches/longhorn.yaml
+    - ./patches/timeservers.yaml
+
+# cluster nodes
+nodes:
+  - hostname: neo50q-master1
+    controlPlane: true
+    ipAddress: neo50q-master1.minirack.k8s.parzival.dmz
+    installDisk: /dev/disk/by-id/nvme-SAMSUNG_MZAL8512HDLU-00BL2_S77MNF0X596035
+    certSANs:
+      - neo50q-master1.minirack.k8s.parzival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    machineSpec:
+      secureboot: true
+      useUKI: true
+      mode: metal
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: 18:3d:2d:57:63:96
+        dhcp: true
+    schematic:
+      customization:
+        systemExtensions:
+          officialExtensions:
+            - siderolabs/intel-ucode
+            # extensions required for longhorn
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+
+  - hostname: pi4-agent1
+    controlPlane: false
+    ipAddress: pi4-agent1.minirack.k8s.parzival.dmz
+    installDisk: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_00023718080525122251-0:0
+    certSANs:
+      - pi4-agent1.minirack.k8s.parzival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: d8:3a:dd:b1:3f:45
+        dhcp: true
+    schematic:
+      overlay:
+        name: rpi_generic
+        image: siderolabs/sbc-raspberrypi
+      customization:
+        systemExtensions:
+          officialExtensions:
+            # extensions required for longhorn
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+
+  - hostname: pi4-agent2
+    controlPlane: false
+    ipAddress: pi4-agent2.minirack.k8s.parzival.dmz
+    installDisk: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_00002614080725213227-0:0
+    certSANs:
+      - pi4-agent2.minirack.k8s.parzival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: dc:a6:32:9b:6b:78
+        dhcp: true
+    schematic:
+      overlay:
+        name: rpi_generic
+        image: siderolabs/sbc-raspberrypi
+      customization:
+        systemExtensions:
+          officialExtensions:
+            # extensions required for longhorn
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+
+  - hostname: pi4-agent3
+    controlPlane: false
+    ipAddress: pi4-agent3.minirack.k8s.parzival.dmz
+    installDisk: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_00017408080525132342-0:0
+    certSANs:
+      - pi4-agent3.minirack.k8s.parzival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: d8:3a:dd:fd:f5:80
+        dhcp: true
+    schematic:
+      overlay:
+        name: rpi_generic
+        image: siderolabs/sbc-raspberrypi
+      customization:
+        systemExtensions:
+          officialExtensions:
+            # extensions required for longhorn
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
+
+  - hostname: pi4-agent4
+    controlPlane: false
+    ipAddress: pi4-agent4.minirack.k8s.parzival.dmz
+    installDisk: /dev/disk/by-id/usb-USB_SanDisk_3.2Gen1_00016518051325035920-0:0
+    certSANs:
+      - pi4-agent4.minirack.k8s.parzival.dmz
+    nodeLabels:
+      topology.kubernetes.io/region: eu
+      topology.kubernetes.io/zone: central
+    networkInterfaces:
+      - deviceSelector:
+          hardwareAddr: e4:5f:01:62:30:47
+        dhcp: true
+    schematic:
+      overlay:
+        name: rpi_generic
+        image: siderolabs/sbc-raspberrypi
+      customization:
+        systemExtensions:
+          officialExtensions:
+            # extensions required for longhorn
+            - siderolabs/iscsi-tools
+            - siderolabs/util-linux-tools
