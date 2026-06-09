@@ -1,7 +1,7 @@
 clusterName: canceled
 endpoint: https://canceled.k8s.parzival.space:6443
 
-talosVersion: v1.12.6
+talosVersion: v1.13.4
 kubernetesVersion: v1.35.4
 allowSchedulingOnControlPlanes: true
 

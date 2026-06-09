@@ -1,7 +1,7 @@
 clusterName: minirack
 endpoint: https://minirack.k8s.parzival.dmz:6443
 
-talosVersion: v1.12.6
+talosVersion: v1.13.4
 kubernetesVersion: v1.35.4
 allowSchedulingOnControlPlanes: true
 
